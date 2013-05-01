@@ -47,6 +47,9 @@ public class TrafficLight {
     private int height;
     private boolean turnedOn;
     private long interval;
+    private long intervalRed;
+    private long intervalYellow;
+    private long intervalGreen;
 
     /**
      * Konstruktor swiatla dorogwego z ustaleniem poyzycji i koloru
@@ -96,7 +99,7 @@ public class TrafficLight {
 
     }
 
-    public void serColor(LightColor color){
+    public void setColor(LightColor color){
         this.color = color;
     }
 
@@ -120,8 +123,41 @@ public class TrafficLight {
         this.interval = interval;
     }
 
+    public void setIntervalRed(long interval){
+        intervalRed = interval;
+    }
+
+    public void setIntervalYellow(long interval){
+        intervalYellow = interval;
+    }
+
+    public void setIntervalGreen(long interval){
+        intervalGreen = interval;
+    }
+
+    public void setX(int x){
+        this.x = x;
+    }
+
+    public void setY(int y){
+        this.y = y;
+    }
+
+
     public long getInterval(){
         return interval;
+    }
+
+    public long getIntervalRed(){
+        return intervalRed;
+    }
+
+    public long getIntervalYellow(){
+        return intervalYellow;
+    }
+
+    public long  getIntervalGreen(){
+        return  intervalGreen;
     }
 
     public int getId(){
