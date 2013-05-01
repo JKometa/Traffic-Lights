@@ -13,6 +13,7 @@ public class main {
 
         System.out.print("Dupa");
         System.out.print("Zmiana");
+        System.out.print("Blichar to pedał");
 
     }
 }
