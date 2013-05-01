@@ -14,6 +14,7 @@ public class main {
         System.out.print("Dupa");
         System.out.print("Zmiana");
         System.out.print("Blichar to pedał");
+        System.out.print("QBS SIE PYTA NA CHUJ KURWA ROBIŁEŚ TE AKTUALIZACJE MC!");
 
     }
 }
