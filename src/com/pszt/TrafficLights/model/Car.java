@@ -1,6 +1,8 @@
 package com.pszt.TrafficLights.model;
 
 
+import java.awt.*;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Modzel
@@ -8,126 +10,68 @@ package com.pszt.TrafficLights.model;
  * Time: 12:09
  * To change this template use File | Settings | File Templates.
  */
-public class Car {
-
-    private long id;
-    private int x;
-    private int y;
-    private int destX;
-    private int destY;
-    private int width;
-    private int height;
-    private boolean onStreet;
-
+public class Car extends ModelLimitObject implements Cloneable {
+    static final int WIDTH_HORIZONTAL = 30;
+    static final int HEIGHT_HORIZONTAL = 10;
 
     /**
-     * Konstruktor samochodu z przypisaniem szerokosci i wysokosci
-     *
-     * @param id  id samochodu
-     * @param x   wsporzedna x samochodu
-     * @param y   wspolrzedna y samochodu
-     * @param destX  wspolrzedna x celu do ktorego dazy samochod
-     * @param destY   wspolrzedna y celu do ktorego dazy samochod
-     * @param width   szerokosc samochodu
-     * @param height  wysokosc samochodu
+     * Okresla czy pojazd porusza sie pionowo czy poziomo
      */
-    public Car(int id, int x, int y, int destX, int destY, int width, int height){
-        this.id = id;
-        this.x = x;
-        this.y = y;
-        this.destX = destX;
-        this.destY = y;
-        this.width = width;
-        this.height = height;
-    }
+    private boolean horizontal;
 
     /**
-     * Konstruktor samochodu
-     *
-     * @param id  id samochodu
-     * @param x   wsporzedna x samochodu
-     * @param y   wspolrzedna y samochodu
-     * @param destX  wspolrzedna x celu do ktorego dazy samochod
-     * @param destY   wspolrzedna y celu do ktorego dazy samochod
+     * Okresla czy pojazd porusza sie po osi w kierunku rosnacych zmiennych
      */
-    public Car(int id, int x, int y, int destX, int destY){
-        this.id = id;
-        this.x = x;
-        this.y = y;
-        this.destX = destX;
-        this.destY = y;
-    }
+    private boolean ascending;
 
-    public void carPosition(int x, int y){
-        this.x = x;
-        this.y = y;
-    }
+    private int speed;
 
-    /**
-     * Ustawienie zmiennej mowiacej o tym czy samochod jest na drodze czy nie
-     *
-     * @param onStreet  parametr true/false
-     */
-    public void setOnStreet(boolean onStreet){
-        this.onStreet = onStreet;
-    }
 
-    public void setWidth(int width){
-        this.width = width;
-    }
 
-    public void setHeight(int height){
-        this.height = height;
-    }
-
-    public void setX(int x){
-        this.x = x;
-    }
-
-    public void setY(int y){
-        this.y = y;
-    }
-
-    public long getId(){
-        return id;
-    }
-
-    public int getX(){
-        return x;
-    }
-
-    public int getY(){
-        return y;
-    }
-
-    public int getDestX(){
-        return destX;
-    }
-
-    public int getDestY(){
-        return destY;
-    }
-
-    public int getWidth(){
-        return width;
-    }
-
-    public int getHeight(){
-        return height;
-    }
-
-    public boolean getOnStreet(){
-        return this.onStreet;
+    public Car(int x, int y, boolean horizontal, boolean ascending){
+        super(x,y);
+        this.horizontal = horizontal;
+        this.ascending = ascending;
     }
 
 
 
+    @Override
+    public Rectangle getBounds() {
+        Rectangle bounds = new Rectangle();
+        bounds.setSize((horizontal ? WIDTH_HORIZONTAL : HEIGHT_HORIZONTAL),
+                        (horizontal ? HEIGHT_HORIZONTAL : WIDTH_HORIZONTAL));
+        bounds.setLocation(x - bounds.width / 2 , y - bounds.height / 2);
+        return bounds;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 
 
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        try {
+            Car clone = (Car)super.clone();
+            clone.ascending = this.ascending;
+            clone.horizontal = this.ascending;
+            clone.speed = this.speed;
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            return null;
+        }
+    }
 
+    public boolean isHorizontal() {
+        return horizontal;
+    }
 
+    public boolean isAscending() {
+        return ascending;
+    }
 
+    public int getSpeed() {
+        return speed;
+    }
 
-
-
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
 }

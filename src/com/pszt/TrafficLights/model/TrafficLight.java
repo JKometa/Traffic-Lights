@@ -7,11 +7,11 @@ package com.pszt.TrafficLights.model;
  * Time: 12:27
  * To change this template use File | Settings | File Templates.
  */
-public class TrafficLight {
+public class TrafficLight implements Cloneable {
 
 
     public static enum LightColor {
-        INVALID(-1), RED(0), YELLOW(1), GREEN(2);
+        INVALID(-1), RED(0), RED_YELLOW(1), GREEN(2), YELLOW(3);
 
         private int lightColor;
 
@@ -24,6 +24,56 @@ public class TrafficLight {
         }
     }
 
+    private LightColor color;
+
+    public TrafficLight(LightColor color) {
+        this.color = color;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        try {
+            TrafficLight clone = (TrafficLight)super.clone();
+            clone.color = color;
+
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            return null;
+        }
+    }
+
+    public LightColor getColor() {
+        return color;
+    }
+
+    public void setColor(LightColor color) {
+        this.color = color;
+    }
+
+    public void nextColor(){
+        switch (color){
+            case RED:
+                color = LightColor.RED_YELLOW;
+                break;
+
+            case RED_YELLOW:
+                color = LightColor.GREEN;
+                break;
+
+            case GREEN:
+                color = LightColor.YELLOW;
+                break;
+
+            case YELLOW:
+                color = LightColor.RED;
+                break;
+        }
+    }
+
+
+
+
+    /*
     public static enum Possition {
         INVALID(-1), LEFT(0), RIGHT(1), UP(2), DOWN(3);
 
@@ -39,18 +89,18 @@ public class TrafficLight {
     }
 
     private Possition possition;
-    private LightColor color;
-    private int id;
-    private int x;
-    private int y;
-    private int width;
-    private int height;
+
+    */
+    /*
+
+
+    /*
     private boolean turnedOn;
     private long interval;
     private long intervalRed;
     private long intervalYellow;
     private long intervalGreen;
-
+    */
     /**
      * Konstruktor swiatla dorogwego z ustaleniem poyzycji i koloru
      *
@@ -62,7 +112,7 @@ public class TrafficLight {
      * @param possition pozycja na skrzyzowaniu po ktorej stoi swiatlo
      * @param color      kolor swiatla
      * @param interval   czas pomiedzy zmiana swiatel
-     */
+     *
     public TrafficLight(int id, int x, int y, int width, int height,Possition possition, LightColor color, long interval){
 
         this.id = id;
@@ -86,7 +136,7 @@ public class TrafficLight {
      * @param width  szerokosc swiatla
      * @param height wysokosc siwatla
      * @param interval   czas pomiedzy zmiana swiatel
-     */
+     *
     public TrafficLight(int id, int x, int y, int width, int height, long interval){
 
         this.id = id;
@@ -193,6 +243,6 @@ public class TrafficLight {
     }
 
 
-
+          */
 
 }

@@ -1,6 +1,6 @@
 package com.pszt.TrafficLights.Ewolucja;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.lang.Math.*;
 
 /**
@@ -29,10 +29,10 @@ public class Populacja {
         iloscOsobnikow = 10;
         tau = 1 / (Math.sqrt(2 * Math.sqrt(iloscOsobnikow)));
         tau2 = 1 / (Math.sqrt(2 * iloscOsobnikow));
-        generator = new Random;
+        generator = new Random();
 
-        osobnicy = new ArrayList<Osobnik>;
-        potomkowie = new ArrayList<Osobnik>;
+        osobnicy = new ArrayList<Osobnik>();
+        potomkowie = new ArrayList<Osobnik>();
 
     }
 
@@ -45,7 +45,7 @@ public class Populacja {
             double[] rozkladyNowegoOsobnika = nowyRodzic.getRozklady();
             for (int j = 0; j < iloscCech; ++j){
                 cechyNowegoRodzica[j] = losuj();
-                rozkladyNowegoOsobnika[j] = generator.nextGaussian;
+                rozkladyNowegoOsobnika[j] = generator.nextGaussian();
 
             }
         }
@@ -59,6 +59,7 @@ public class Populacja {
     }
 
     private double losuj(){
-        double los = generator.nextDouble(MAX_LOSUJ - MIN_LOSUJ) + MIN_LOSUJ;
+        double los =  MIN_LOSUJ + (MAX_LOSUJ - MIN_LOSUJ) * generator.nextDouble();
+        return los;
     }
 }
