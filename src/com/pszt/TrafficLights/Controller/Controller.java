@@ -38,10 +38,10 @@ public class Controller implements  Runnable{
                     }
             }
 
-            simulation.update(DELAY_FRAME);
+            simulation.update((sleep > 0 ? DELAY_FRAME : timeDiff ));
 
             /*
-             * tu bedzie funkcja z view rysujaca i przekazujaca kopie samochodow i skrzyzowan
+             * tu będzie funkcja z view rysująca i przekazująca kopie samochodów i skrzyżowań
              */
         }
     }
