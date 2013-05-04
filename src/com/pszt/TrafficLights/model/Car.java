@@ -12,20 +12,20 @@ import java.awt.*;
  */
 public class Car extends ModelLimitObject implements Cloneable {
     /**
-     * szerokosc samochodu w pozycji poziomej,
-     *  w pozycji pionowej jest to jego wysokosc
+     * szerokość samochodu w pozycji poziomej,
+     *  w pozycji pionowej jest to jego wysokość
      */
     static final int WIDTH_HORIZONTAL = 30;
 
     /**
-     * wysokosc samochodu w pozycji poziomej,
-     * w pozycji pionowej jest to jego szerokosc
+     * wysokość samochodu w pozycji poziomej,
+     * w pozycji pionowej jest to jego szerokość
      */
     static final int HEIGHT_HORIZONTAL = 10;
 
     /**
-     * minimalny odstep jakie musza zachowac samochody miedzy soba,
-     *  a takze samochod od "zamknietego" skrzyzowania
+     * minimalny odstęp jakie muszą zachować samochody miedzy sobą,
+     *  a także samochód od "zamkniętego" skrzyżowania
      */
     static final private int MARGIN = 10;
 
@@ -35,27 +35,28 @@ public class Car extends ModelLimitObject implements Cloneable {
     private boolean horizontal;
 
     /**
-     * Okresla czy pojazd porusza sie po osi w kierunku rosnacych zmiennych
+     * Określa czy pojazd porusza sie po osi w kierunku rosnących zmiennych
      */
     private boolean ascending;
 
     /**
-     * predkosc z jaka porusza sie samochod
+     * prędkość z jaka porusza sie samochód
      */
     private int speed;
 
     /**
-     * okresla czy samochod znajduje sie na skrzyzowaniu
+     * skrzyżowanie na którym sie znajduje samochód,
+     *  null oznacza, że samochód nie jest na skrzyżowaniu
      */
-    private boolean onCrossroad;
+    private Crossroad crossroad;
 
 
 
-    public Car(int x, int y, boolean horizontal, boolean ascending){
+    public Car(float x, float y, boolean horizontal, boolean ascending){
         super(x,y);
         this.horizontal = horizontal;
         this.ascending = ascending;
-        this.onCrossroad = false;
+        this.crossroad = null;
     }
 
 
@@ -65,7 +66,8 @@ public class Car extends ModelLimitObject implements Cloneable {
         Rectangle bounds = new Rectangle();
         bounds.setSize((horizontal ? WIDTH_HORIZONTAL : HEIGHT_HORIZONTAL),
                         (horizontal ? HEIGHT_HORIZONTAL : WIDTH_HORIZONTAL));
-        bounds.setLocation(x - bounds.width / 2 , y - bounds.height / 2);
+        bounds.setLocation((int)(x - bounds.width / 2 ),
+                (int)(y - bounds.height / 2));
         return bounds;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
@@ -77,6 +79,7 @@ public class Car extends ModelLimitObject implements Cloneable {
             clone.ascending = this.ascending;
             clone.horizontal = this.ascending;
             clone.speed = this.speed;
+            clone.crossroad = this.crossroad;
             return clone;
         } catch (CloneNotSupportedException e) {
             return null;
@@ -99,17 +102,25 @@ public class Car extends ModelLimitObject implements Cloneable {
         this.speed = speed;
     }
 
+    /**
+     * sprawdza czy samochód jest na skrzyżowaniu
+     * @return true jeśli jest
+     */
     public boolean isOnCrossroad() {
-        return onCrossroad;
+        return (crossroad != null);
     }
 
-    public void setOnCrossroad(boolean onCrossroad) {
-        this.onCrossroad = onCrossroad;
+    public Crossroad getCrossroad() {
+        return crossroad;
+    }
+
+    public void setCrossroad(Crossroad crossroad) {
+        this.crossroad = crossroad;
     }
 
     /**
-     * ustawia samochod za innym samochodem zachowujac wymagany odstep
-     * @param car samochod ktory znajduje sie przed naszym obiektem
+     * ustawia samochód za innym samochodem zachowując wymagany odstęp
+     * @param car samochód który znajduje sie przed naszym obiektem
      */
     public void setPositionBefore(Car car){
         int delta = WIDTH_HORIZONTAL + MARGIN;
@@ -122,8 +133,8 @@ public class Car extends ModelLimitObject implements Cloneable {
     }
 
     /**
-     * ustawia samochod przed skrzyzowaniem zachowujac wymagany odstep
-     * @param crossroad skrzyzowanie ktore blokuje wjazd samochodowi
+     * ustawia samochód przed skrzyżowaniem zachowując wymagany odstęp
+     * @param crossroad skrzyżowanie które blokuje wjazd samochodowi
      */
     public void setPositionBefore(Crossroad crossroad){
         int delta = Model.ROAD_WIDTH / 2 + WIDTH_HORIZONTAL /2 + MARGIN;

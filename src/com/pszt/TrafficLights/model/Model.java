@@ -2,6 +2,7 @@ package com.pszt.TrafficLights.model;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.awt.Rectangle;
 
 /**
  * Created with IntelliJ IDEA.
@@ -122,6 +123,14 @@ public class Model implements Cloneable {
         } catch (CloneNotSupportedException e) {
             return null;
         }
+    }
+
+    /**
+     * get bounds
+     * @return prostokąt jaki zajmuje plansza modelu
+     */
+    public Rectangle getBounds(){
+        return new Rectangle(0, 0, BOARD_WIDTH, BOARD_HEIGHT);
     }
 
     public ArrayList<Car> getCars() {

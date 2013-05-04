@@ -21,7 +21,7 @@ public class SpawnPoint extends ModelLimitObject {
      */
     private Car prototype;
 
-    public SpawnPoint(int x, int y) {
+    public SpawnPoint(float x, float y) {
         super(x, y);
         boolean horizontal;
         if ( x > 0 && x < Model.BOARD_WIDTH){

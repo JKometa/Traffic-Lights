@@ -10,8 +10,8 @@ import java.util.ArrayList;
  * Date: 01.05.13
  * Time: 12:55
  *
- * Klasa przedstawiajaca skrzyzowanie, zawiera dwa swiatla (dla pionu i poziomu),
- * dziedziczy po ModelLimitObject, zeby skrzyzowanie wyznaczalo od razu maksymalna predkosc
+ * Klasa przedstawiająca skrzyżowanie, zawiera dwa swiatła (dla pionu i poziomu),
+ * dziedziczy po ModelLimitObject, żeby skrzyzowanie wyznaczalo od razu maksymalna predkosc
  * dla odcinka drogi "za" skrzyzowaniem
  */
 
@@ -40,7 +40,7 @@ public class Crossroad extends ModelLimitObject implements Cloneable {
     private boolean ascendingHorizontal;
 
     /**
-     * okresla czy ruch w osi pionowej jest w kierunku rosnacych wspolrzednych
+     * określa czy ruch w osi pionowej jest w kierunku rosnących współrzędnych
      * true |   false ^
      *      |         |
      *      V         |
@@ -49,9 +49,15 @@ public class Crossroad extends ModelLimitObject implements Cloneable {
     private boolean ascendingVertical;
 
     /**
-     * czas w jakim skrzyzowania sa w stanie zielonym/czerwonym
+     * czas w jakim skrzyżowania sa w stanie zielonym/czerwonym
      */
     private long intervalRedGreen;
+
+
+    /**
+     * czas za jaki maja zmienic sie swiatla
+     */
+    private long timeToChangeLight;
 
     /**
      * stan swiatel, true jesli swiatla sa zielone lub czerwone
@@ -62,13 +68,14 @@ public class Crossroad extends ModelLimitObject implements Cloneable {
      */
     private boolean stateRedGreen;
 
-    public Crossroad(int x, int y, boolean ascendingHorizontal, boolean ascendingVertical) {
+    public Crossroad(float x, float y, boolean ascendingHorizontal, boolean ascendingVertical) {
         super(x, y);
         this.ascendingHorizontal = ascendingHorizontal;
         this.ascendingVertical = ascendingVertical;
         this.intervalRedGreen = 3000;
         this.trafficLightHorizontal = new TrafficLight(TrafficLight.LightColor.GREEN);
         this.trafficLightVertical = new TrafficLight(TrafficLight.LightColor.RED);
+        this.timeToChangeLight = this.intervalRedGreen;
     }
 
     @Override
@@ -86,10 +93,10 @@ public class Crossroad extends ModelLimitObject implements Cloneable {
     }
 
     /**
-     * zmienia stan swiatel na nastepna sekwencje
-     * @return czas za jaki powinna byc nastepna zmiana
+     * zmienia stan świateł na następny z sekwencji
+     * @return czas za jaki powinna byc następna zmiana
      */
-    public long nextLight(){
+    private long nextLight(){
         trafficLightHorizontal.nextColor();
         trafficLightVertical.nextColor();
         stateRedGreen = !stateRedGreen;
@@ -113,8 +120,28 @@ public class Crossroad extends ModelLimitObject implements Cloneable {
         return ascendingHorizontal;
     }
 
+    public TrafficLight getTrafficLightHorizontal() {
+        return trafficLightHorizontal;
+    }
+
+    public TrafficLight getTrafficLightVertical() {
+        return trafficLightVertical;
+    }
+
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x - Model.ROAD_WIDTH / 2, y - Model.ROAD_WIDTH / 2, Model.ROAD_WIDTH, Model.ROAD_WIDTH);
+        return new Rectangle((int)(x - Model.ROAD_WIDTH / 2),(int)( y - Model.ROAD_WIDTH / 2),
+                Model.ROAD_WIDTH, Model.ROAD_WIDTH);
     }
+
+    public void updateLight(long deltaTime){
+        timeToChangeLight -= deltaTime;
+        if(timeToChangeLight <= 0){
+            timeToChangeLight += nextLight();
+        }
+    }
+
+
 }
+
+

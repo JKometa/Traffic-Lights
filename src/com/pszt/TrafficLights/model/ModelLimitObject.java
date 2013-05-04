@@ -22,7 +22,7 @@ abstract class ModelLimitObject extends ModelObject implements Cloneable {
      * @param x wspolrzedne x
      * @param y wspolrzedne y
      */
-    protected ModelLimitObject(int x, int y) {
+    protected ModelLimitObject(float x, float y) {
         super(x, y);
         Random rand = new Random();
         int randInt = rand.nextInt(5);
