@@ -13,6 +13,7 @@ import java.awt.*;
 public class Car extends ModelLimitObject implements Cloneable {
     static final int WIDTH_HORIZONTAL = 30;
     static final int HEIGHT_HORIZONTAL = 10;
+    static final private int MARGIN = 10;
 
     /**
      * Okresla czy pojazd porusza sie pionowo czy poziomo
@@ -24,7 +25,15 @@ public class Car extends ModelLimitObject implements Cloneable {
      */
     private boolean ascending;
 
+    /**
+     * predkosc z jaka porusza sie samochod
+     */
     private int speed;
+
+    /**
+     * okresla czy samochod znajduje sie na skrzyzowaniu
+     */
+    private boolean onCrossroad;
 
 
 
@@ -32,6 +41,7 @@ public class Car extends ModelLimitObject implements Cloneable {
         super(x,y);
         this.horizontal = horizontal;
         this.ascending = ascending;
+        this.onCrossroad = false;
     }
 
 
@@ -73,5 +83,32 @@ public class Car extends ModelLimitObject implements Cloneable {
 
     public void setSpeed(int speed) {
         this.speed = speed;
+    }
+
+    public boolean isOnCrossroad() {
+        return onCrossroad;
+    }
+
+    public void setOnCrossroad(boolean onCrossroad) {
+        this.onCrossroad = onCrossroad;
+    }
+
+    public void setPositionBefore(Car car){
+        int delta = WIDTH_HORIZONTAL + MARGIN;
+        if (horizontal){
+            setPositionX(car.getPositionX() + (ascending ? (- delta) : delta));
+        } else {
+            setPositionY(car.getPositionY() + (ascending ? (- delta) : delta));
+        }
+
+    }
+
+    public void setPositionBefore(Crossroad crossroad){
+        int delta = Model.ROAD_WIDTH / 2 + WIDTH_HORIZONTAL /2 + MARGIN;
+        if (horizontal){
+            setPositionX(crossroad.getPositionX() + (ascending ? (- delta) : delta));
+        } else {
+            setPositionY(crossroad.getPositionY() + (ascending ? (- delta) : delta));
+        }
     }
 }

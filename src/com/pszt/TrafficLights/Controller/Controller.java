@@ -12,7 +12,7 @@ import com.pszt.TrafficLights.model.Model;
 public class Controller implements  Runnable{
     private Model model;
 
-    Simulation simulation;
+    private Simulation simulation;
     private Thread thread;
     final private int DELAY_FRAME = 50;
 

@@ -15,7 +15,7 @@ abstract class ModelLimitObject extends ModelObject implements Cloneable {
      */
     private int speedLimit;
 
-    public ModelLimitObject(int x, int y) {
+    protected ModelLimitObject(int x, int y) {
         super(x, y);
         Random rand = new Random();
         int randInt = rand.nextInt(5);

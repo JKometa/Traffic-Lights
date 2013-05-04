@@ -14,10 +14,13 @@ import java.util.ArrayList;
 
 
 public class Crossroad extends ModelLimitObject implements Cloneable {
-    static private long intervalYellow = 3;
+    static final private long intervalYellow = 3000;
 
     private TrafficLight trafficLightVertical;
     private TrafficLight trafficLightHorizontal;
+
+    private boolean ascendingHorizontal;
+    private boolean ascendingVertical;
 
     private long intervalRedGreen;
 
@@ -27,11 +30,13 @@ public class Crossroad extends ModelLimitObject implements Cloneable {
      */
     private boolean stateRedGreen;
 
-    public Crossroad(int x, int y) {
+    public Crossroad(int x, int y, boolean ascendingHorizontal, boolean ascendingVertical) {
         super(x, y);
-        intervalRedGreen = 3;
-        trafficLightHorizontal = new TrafficLight(TrafficLight.LightColor.GREEN);
-        trafficLightVertical = new TrafficLight(TrafficLight.LightColor.RED);
+        this.ascendingHorizontal = ascendingHorizontal;
+        this.ascendingVertical = ascendingVertical;
+        this.intervalRedGreen = 3000;
+        this.trafficLightHorizontal = new TrafficLight(TrafficLight.LightColor.GREEN);
+        this.trafficLightVertical = new TrafficLight(TrafficLight.LightColor.RED);
     }
 
     @Override
@@ -66,6 +71,14 @@ public class Crossroad extends ModelLimitObject implements Cloneable {
 
     public void setIntervalRedGreen(long intervalRedGreen) {
         this.intervalRedGreen = intervalRedGreen;
+    }
+
+    public boolean isAscendingVertical() {
+        return ascendingVertical;
+    }
+
+    public boolean isAscendingHorizontal() {
+        return ascendingHorizontal;
     }
 
     @Override

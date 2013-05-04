@@ -53,6 +53,10 @@ public class SpawnPoint extends ModelLimitObject {
         return spawn;
     }
 
+    public boolean isAscending(){
+        return prototype.isAscending();
+    }
+
     @Override
     public Rectangle getBounds() {
         return prototype.getBounds();

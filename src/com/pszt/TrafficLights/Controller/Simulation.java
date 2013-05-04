@@ -34,7 +34,7 @@ public class Simulation {
 
     /**
      * tu sie bedzie dziala cala logika
-     * @param deltaTime
+     * @param deltaTime roznica czasowa miedzy ostatnim krokiem symulacji
      */
     public void update(long deltaTime){
 

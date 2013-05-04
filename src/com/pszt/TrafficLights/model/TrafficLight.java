@@ -50,6 +50,10 @@ public class TrafficLight implements Cloneable {
         this.color = color;
     }
 
+    public boolean isGreen(){
+        return (color == LightColor.GREEN ? true : false);
+    }
+
     public void nextColor(){
         switch (color){
             case RED:

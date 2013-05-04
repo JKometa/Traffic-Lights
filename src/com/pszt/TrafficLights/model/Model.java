@@ -42,20 +42,30 @@ public class Model implements Cloneable {
 
         Random generator = new Random();
 
-
+        ArrayList < SpawnPoint > horizontalSpawnPoints = new ArrayList<SpawnPoint>();
         for (int y : horizontal){
              boolean ascending = generator.nextBoolean();
-             spawnPoints.add(new SpawnPoint((ascending ? 0 : BOARD_WIDTH), y));
-
-             for ( int x : vertical){
-                 crossroads.add(new Crossroad(x, y));
-             }
-
+             horizontalSpawnPoints.add(new SpawnPoint((ascending ? 0 : BOARD_WIDTH), y));
         }
 
+        ArrayList < SpawnPoint > verticalSpawnPoints = new ArrayList<SpawnPoint>();
         for (int x : vertical){
             boolean ascending = generator.nextBoolean();
-            spawnPoints.add(new SpawnPoint(x, (ascending ? 0 : BOARD_HEIGHT)));
+            verticalSpawnPoints.add(new SpawnPoint(x, (ascending ? 0 : BOARD_HEIGHT)));
+        }
+
+        for (SpawnPoint y : horizontalSpawnPoints){
+            for (SpawnPoint x : verticalSpawnPoints){
+                crossroads.add(new Crossroad(x.getPositionX(), y.getPositionY(),y.isAscending(), x.isAscending()));
+            }
+        }
+
+        for (SpawnPoint tmp : horizontalSpawnPoints){
+            spawnPoints.add(tmp);
+        }
+
+        for (SpawnPoint tmp : verticalSpawnPoints){
+            spawnPoints.add(tmp);
         }
 
         for (SpawnPoint spawn : spawnPoints){
