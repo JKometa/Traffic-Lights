@@ -46,6 +46,9 @@ public class Controller implements  Runnable{
         }
     }
 
+    /**
+     * startuje symulacje
+     */
     public void start(){
         thread = new Thread(this);
         thread.start();

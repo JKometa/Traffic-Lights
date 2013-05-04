@@ -3,8 +3,10 @@ package com.pszt.TrafficLights.Controller;
 import com.pszt.TrafficLights.model.*;
 import org.w3c.dom.css.Rect;
 
-import java.awt.*;
+import java.awt.Rectangle;
+import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,6 +21,8 @@ public class Simulation {
      * przelicznik prędkości
      */
     final static private float SPEED_RATIO = 1.0f / 10.0f;
+
+
     private Model model;
 
 
@@ -31,6 +35,8 @@ public class Simulation {
      * określa czy nowe samochody wjeżdżają na plansze
      */
     private boolean spawnCars;
+
+
 
     public Simulation(Model model) {
         this.model = model;
@@ -127,8 +133,6 @@ public class Simulation {
             if( boardBox.contains(carBox) || boardBox.intersects(carBox) ){
                 carsToDelete.add(car);
             }
-
-
         }
 
         //usuwa samochody które wyjechały za plansze
@@ -137,6 +141,33 @@ public class Simulation {
              cars.remove(carToDelete);
         }
 
+        //spawnowanie samochodów
+        if (spawnCars && model.updateTimeToRespawn(deltaTime)){
+
+            //losuje z którego spawn pointa ma sie zrespić samochód
+            Random generator = new Random();
+            ArrayList< SpawnPoint > spawnPoints = model.getSpawnPoints();
+            int losuj = generator.nextInt(spawnPoints.size());
+            SpawnPoint spawnPoint = spawnPoints.get(losuj);
+            Rectangle spawnBox = spawnPoint.getBounds();
+
+            //sprawdza czy jest miejsce dla nowego samochodu z tego spawn pointa
+            boolean clearForSpawn = true;
+            for(Car car : model.getCars()){
+                if(spawnBox.intersects(car.getBounds())){
+                    clearForSpawn = false;
+                    break;
+                }
+            }
+
+            //jeśli jest miejsce to tworzy i dodaje do kontenera nowy samochód, jeśli nie to nic nie robi
+            if(clearForSpawn){
+                model.getCars().add(spawnPoint.spawn());
+            }
+
+        }
+
     }
+
 }
 

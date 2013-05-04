@@ -13,46 +13,61 @@ import java.awt.Rectangle;
  */
 public class Model implements Cloneable {
     /**
-     * szerokosc drogi
+     * szerokość drogi
      */
     static final int ROAD_WIDTH = 40;
 
     /**
-     * szerokosc planszy na ktorej sa skrzyzowania
+     * szerokość planszy na której sa skrzyżowania
      */
     static final int BOARD_WIDTH = 1000;
 
     /**
-     * wysokosc planszy na ktorej sa skrzyzowania
+     * wysokość planszy na której sa skrzyżowania
      */
     static final int BOARD_HEIGHT = 1000;
 
     /**
-     * minimalna odleglosc miedzy dwoma drogami
+     * minimalna odległość miedzy dwoma drogami
      */
     static private final int BOARD_MARGIN = 100;
 
     /**
-     * kontener przechowujacy wszystkie samochody na planszy
+     * kontener przechowujący wszystkie samochody na planszy
      */
     private ArrayList< Car > cars;
 
     /**
-     * kontener przechowujacy wszystkie skrzyzowania na planszy
+     * kontener przechowujący wszystkie skrzyżowania na planszy
      */
     private ArrayList< Crossroad > crossroads;
 
     /**
-     * kontener przechowyjacy wszystkie poczatki drog na planszy
+     * kontener przechowujący wszystkie początki dróg na planszy
      */
     private ArrayList< SpawnPoint> spawnPoints;
 
     /**
-     * generuje model z odpowiednia iloscia drog
-     * @param numberOfHorizontalRoads ilosc drog poziomych
-     * @param numberOfVerticalRoads ilosc drog pionowych
+     * czas za jaki ma sie zrespić nowy samochód
+     */
+    private long timeToNextCarSpawn;
+
+    /**
+     * górny przedział czasu na respawn samochodu
+     */
+    final static private int MAX_SPAWN_TIME = 3000;
+
+    /**
+     * dolny przedział czasu na respawn samochodu
+     */
+    final static private int MIN_SPAWN_TIME = 1000;
+
+    /**
+     * generuje model z odpowiednia ilością dróg
+     * @param numberOfHorizontalRoads ilość dróg poziomych
+     * @param numberOfVerticalRoads ilość dróg pionowych
      *
-     *  Narazie nie dziala i tworzy statycznie :P
+     *  Na razie nie działa i tworzy statycznie :P
      */
 
     public Model(int numberOfHorizontalRoads, int numberOfVerticalRoads) {
@@ -67,6 +82,8 @@ public class Model implements Cloneable {
         int[] vertical = {200, 555};
 
         Random generator = new Random();
+
+        timeToNextCarSpawn = generator.nextInt(MAX_SPAWN_TIME + MIN_SPAWN_TIME) - MIN_SPAWN_TIME;
 
         ArrayList < SpawnPoint > horizontalSpawnPoints = new ArrayList<SpawnPoint>();
         for (int y : horizontal){
@@ -143,5 +160,20 @@ public class Model implements Cloneable {
 
     public ArrayList<SpawnPoint> getSpawnPoints() {
         return spawnPoints;
+    }
+
+    /**
+     *  uaktualnia czas do respawnu
+     * @param deltaTime czas jaki upłynął od ostatnie aktualizacji
+     * @return true jeśli wymagany jest respawn nowego samochodu
+     */
+    public boolean updateTimeToRespawn(long deltaTime){
+        timeToNextCarSpawn -= deltaTime;
+        if(timeToNextCarSpawn <= 0){
+            Random generator = new Random();
+            timeToNextCarSpawn = generator.nextInt(MAX_SPAWN_TIME + MIN_SPAWN_TIME) - MIN_SPAWN_TIME;
+            return true;
+        }
+        return false;
     }
 }
