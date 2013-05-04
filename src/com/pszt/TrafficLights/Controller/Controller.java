@@ -1,6 +1,7 @@
 package com.pszt.TrafficLights.Controller;
 
 import com.pszt.TrafficLights.model.Model;
+import com.pszt.TrafficLights.view.Widok;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,12 +12,14 @@ import com.pszt.TrafficLights.model.Model;
  */
 public class Controller implements  Runnable{
     private Model model;
+    private Widok view;
 
     private Simulation simulation;
     private Thread thread;
-    final private int DELAY_FRAME = 50;
+    final private int DELAY_FRAME = 100;
 
-    public Controller() {
+    public Controller(Widok w) {
+        this.view = w;
     }
 
     @Override
@@ -40,9 +43,9 @@ public class Controller implements  Runnable{
 
             simulation.update((sleep > 0 ? DELAY_FRAME : timeDiff ));
 
-            /*
-             * tu będzie funkcja z view rysująca i przekazująca kopie samochodów i skrzyżowań
-             */
+            view.maziaj();
+
+            beforeTime = System.currentTimeMillis();
         }
     }
 
