@@ -1,21 +1,35 @@
 package com.pszt.TrafficLights.Controller;
 
 import com.pszt.TrafficLights.model.*;
+import org.w3c.dom.css.Rect;
+
+import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
  * User: marcin
  * Date: 03.05.13
  * Time: 19:57
- * To change this template use File | Settings | File Templates.
+ *
+ * Klasa robiąca całą logikę na modelu
  */
 public class Simulation {
+    /**
+     * przelicznik prędkości
+     */
+    final static private float SPEED_RATIO = 1.0f / 10.0f;
     private Model model;
 
+
     /**
-     * z jaka szybkoscia ma sie odbywac symulacja
+     * z jaka szybkością ma sie odbywać symulacja
      */
     private int scaleTime;
+
+    /**
+     * określa czy nowe samochody wjeżdżają na plansze
+     */
     private boolean spawnCars;
 
     public Simulation(Model model) {
@@ -33,12 +47,96 @@ public class Simulation {
     }
 
     /**
-     * tu sie bedzie dziala cala logika
-     * @param deltaTime roznica czasowa miedzy ostatnim krokiem symulacji
+     * tu sie będzie działa cala logika
+     * @param deltaTime rożnica czasowa miedzy ostatnim krokiem symulacji w ms
      */
     public void update(long deltaTime){
 
         deltaTime *= scaleTime;
 
+
+        //update świateł
+        for (Crossroad crossroad: model.getCrossroads()){
+            crossroad.updateLight(deltaTime);
+        }
+
+
+        // rożnica czasu w sekundach
+        float deltaTimeS = deltaTime / 1000;
+
+        ArrayList< Car > carsToDelete = new ArrayList<Car>();
+
+
+        // poruszanie samochodami i kolizje
+        for (Car car : model.getCars()){
+            //rożnica przemieszczenia
+            float deltaS = deltaTimeS * car.getSpeed() * SPEED_RATIO;
+
+            if (!car.isAscending()){
+                deltaS = - deltaS;
+            }
+            Rectangle carBox = car.getBounds();
+            Rectangle boardBox = model.getBounds();
+
+            if (car.isHorizontal()){
+                carBox.x += deltaS;
+            } else {
+                carBox.y += deltaS;
+            }
+
+            //kolizje ze skrzyżowaniami
+            if (car.isOnCrossroad()){
+                Rectangle crossroadBox = car.getCrossroad().getBounds();
+                if(!(crossroadBox.intersects(carBox) || crossroadBox.contains(carBox))){
+                    car.setCrossroad(null);
+                }
+            } else{
+                for(Crossroad crossroad : model.getCrossroads()){
+                    Rectangle crossroadBox = crossroad.getBounds();
+                    if(crossroadBox.intersects(carBox) || crossroadBox.contains(carBox)){
+                        TrafficLight light = (car.isHorizontal() ?
+                                crossroad.getTrafficLightHorizontal() : crossroad.getTrafficLightVertical());
+                        if(light.isGreen()){
+                            car.setCrossroad(crossroad);
+                        } else{
+                            car.setPositionBefore(crossroad);
+                            carBox = car.getBounds();
+                        }
+                        break;
+                    }
+                }
+            }
+
+            //kolizje z innymi samochodami
+            for(Car collisionCar : model.getCars()){
+                if(carBox.intersects(collisionCar.getBounds())){
+                    car.setPositionBefore(collisionCar);
+                    carBox = car.getBounds();
+                    break;
+                }
+            }
+
+            //przesuwa samochodzik na wypadek jakby nie było kolizji
+            if (car.isHorizontal()){
+                car.setPositionY((float) carBox.getCenterY());
+            } else{
+                car.setPositionX((float)carBox.getCenterX());
+            }
+
+            //sprawdza czy samochód nie wyjechał za plansze
+            if( boardBox.contains(carBox) || boardBox.intersects(carBox) ){
+                carsToDelete.add(car);
+            }
+
+
+        }
+
+        //usuwa samochody które wyjechały za plansze
+        ArrayList< Car > cars = model.getCars();
+        for (Car carToDelete : carsToDelete){
+             cars.remove(carToDelete);
+        }
+
     }
 }
+
