@@ -11,14 +11,39 @@ import java.util.Random;
  * To change this template use File | Settings | File Templates.
  */
 public class Model implements Cloneable {
+    /**
+     * szerokosc drogi
+     */
     static final int ROAD_WIDTH = 40;
+
+    /**
+     * szerokosc planszy na ktorej sa skrzyzowania
+     */
     static final int BOARD_WIDTH = 1000;
+
+    /**
+     * wysokosc planszy na ktorej sa skrzyzowania
+     */
     static final int BOARD_HEIGHT = 1000;
 
+    /**
+     * minimalna odleglosc miedzy dwoma drogami
+     */
     static private final int BOARD_MARGIN = 100;
 
-    private  ArrayList< Car > cars;
+    /**
+     * kontener przechowujacy wszystkie samochody na planszy
+     */
+    private ArrayList< Car > cars;
+
+    /**
+     * kontener przechowujacy wszystkie skrzyzowania na planszy
+     */
     private ArrayList< Crossroad > crossroads;
+
+    /**
+     * kontener przechowyjacy wszystkie poczatki drog na planszy
+     */
     private ArrayList< SpawnPoint> spawnPoints;
 
     /**

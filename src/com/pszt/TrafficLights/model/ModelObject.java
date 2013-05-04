@@ -8,7 +8,8 @@ import java.awt.Point;
  * User: marcin
  * Date: 03.05.13
  * Time: 16:08
- * To change this template use File | Settings | File Templates.
+ *
+ *  Abstrakcyjna klasa przedstawiajaca wszystko co ma swoje polozenie na mapie
  */
 abstract class ModelObject implements Cloneable {
     protected int x;
@@ -57,5 +58,9 @@ abstract class ModelObject implements Cloneable {
         this.y = y;
     }
 
+    /**
+     *  getBounds
+     * @return kwadrat jaki zajmuje dany obiekt na mapie
+     */
     abstract public Rectangle getBounds();
 }

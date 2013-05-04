@@ -9,7 +9,8 @@ import java.awt.*;
  * Time: 14:50
  * To change this template use File | Settings | File Templates.
  *
- * Obiekt ktory bedzie spawnowal nowe samochodziki na mapie
+ * Obiekt ktory bedzie spawnowal nowe samochodziki na mapie,
+ * jednoczesnie jest poczatkiem drogi
  */
 
 public class SpawnPoint extends ModelLimitObject {
@@ -43,6 +44,10 @@ public class SpawnPoint extends ModelLimitObject {
         prototype.setSpeed(this.getSpeedLimit());
     }
 
+    /**
+     * spawnuje nowy samochodzik
+     * @return nowo stworzony samochodzik na bazie prototypu
+     */
     public Car spawn(){
         Car spawn = null;
         try {
@@ -53,6 +58,10 @@ public class SpawnPoint extends ModelLimitObject {
         return spawn;
     }
 
+    /**
+     * sprawdza czy samochody poruszajace sie po drodze jada w kierunku rosnacych wspolrzednych
+     * @return true jesli samochody jada w kierunku rosnacych wspolrzednych
+     */
     public boolean isAscending(){
         return prototype.isAscending();
     }

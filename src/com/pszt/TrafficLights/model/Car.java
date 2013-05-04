@@ -11,8 +11,22 @@ import java.awt.*;
  * To change this template use File | Settings | File Templates.
  */
 public class Car extends ModelLimitObject implements Cloneable {
+    /**
+     * szerokosc samochodu w pozycji poziomej,
+     *  w pozycji pionowej jest to jego wysokosc
+     */
     static final int WIDTH_HORIZONTAL = 30;
+
+    /**
+     * wysokosc samochodu w pozycji poziomej,
+     * w pozycji pionowej jest to jego szerokosc
+     */
     static final int HEIGHT_HORIZONTAL = 10;
+
+    /**
+     * minimalny odstep jakie musza zachowac samochody miedzy soba,
+     *  a takze samochod od "zamknietego" skrzyzowania
+     */
     static final private int MARGIN = 10;
 
     /**
@@ -93,6 +107,10 @@ public class Car extends ModelLimitObject implements Cloneable {
         this.onCrossroad = onCrossroad;
     }
 
+    /**
+     * ustawia samochod za innym samochodem zachowujac wymagany odstep
+     * @param car samochod ktory znajduje sie przed naszym obiektem
+     */
     public void setPositionBefore(Car car){
         int delta = WIDTH_HORIZONTAL + MARGIN;
         if (horizontal){
@@ -103,6 +121,10 @@ public class Car extends ModelLimitObject implements Cloneable {
 
     }
 
+    /**
+     * ustawia samochod przed skrzyzowaniem zachowujac wymagany odstep
+     * @param crossroad skrzyzowanie ktore blokuje wjazd samochodowi
+     */
     public void setPositionBefore(Crossroad crossroad){
         int delta = Model.ROAD_WIDTH / 2 + WIDTH_HORIZONTAL /2 + MARGIN;
         if (horizontal){

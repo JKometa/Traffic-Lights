@@ -9,24 +9,56 @@ import java.util.ArrayList;
  * User: Modzel
  * Date: 01.05.13
  * Time: 12:55
- * To change this template use File | Settings | File Templates.
+ *
+ * Klasa przedstawiajaca skrzyzowanie, zawiera dwa swiatla (dla pionu i poziomu),
+ * dziedziczy po ModelLimitObject, zeby skrzyzowanie wyznaczalo od razu maksymalna predkosc
+ * dla odcinka drogi "za" skrzyzowaniem
  */
 
 
 public class Crossroad extends ModelLimitObject implements Cloneable {
+    /**
+     * czas w jakim swiatla sa wstanie zolte/czerwono-zolte
+     */
     static final private long intervalYellow = 3000;
 
+    /**
+     * swiatla dla ruchu pionowego
+     */
     private TrafficLight trafficLightVertical;
+
+    /**
+     * swiatla dla ruchu poziomego
+     */
     private TrafficLight trafficLightHorizontal;
 
+    /**
+     * okresla czy ruch w osi poziomej jest w kierunku rosnacych wspolrzednych
+     * true ---->
+     * false <---
+     */
     private boolean ascendingHorizontal;
+
+    /**
+     * okresla czy ruch w osi pionowej jest w kierunku rosnacych wspolrzednych
+     * true |   false ^
+     *      |         |
+     *      V         |
+     *
+     */
     private boolean ascendingVertical;
 
+    /**
+     * czas w jakim skrzyzowania sa w stanie zielonym/czerwonym
+     */
     private long intervalRedGreen;
 
     /**
      * stan swiatel, true jesli swiatla sa zielone lub czerwone
      * false jesli zolte
+     *
+     * jesli jedne skrzyzowanie jest w stanie czerwonym to drugie musi byc w stanie zielonym
+     * jesli jedna skrzyzowanie jest w stanie zoltym to drugi musi byc w stanie zolto-czerwonym
      */
     private boolean stateRedGreen;
 

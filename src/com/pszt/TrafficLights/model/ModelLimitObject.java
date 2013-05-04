@@ -7,7 +7,8 @@ import java.util.Random;
  * User: marcin
  * Date: 03.05.13
  * Time: 16:36
- * To change this template use File | Settings | File Templates.
+ *
+ * Abstrakcyjna klasa wyznaczajaca ograniczenie predkosci na poczatku drogi ktorej sie znajduje
  */
 abstract class ModelLimitObject extends ModelObject implements Cloneable {
     /**
@@ -15,6 +16,12 @@ abstract class ModelLimitObject extends ModelObject implements Cloneable {
      */
     private int speedLimit;
 
+    /**
+     * Konstruktor przyjmujacy wspolrzedne na ktorej bedzie sie znajdowac obiekt,
+     * predkosc jest generowana losowo
+     * @param x wspolrzedne x
+     * @param y wspolrzedne y
+     */
     protected ModelLimitObject(int x, int y) {
         super(x, y);
         Random rand = new Random();
