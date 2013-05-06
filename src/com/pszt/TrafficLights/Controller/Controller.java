@@ -51,6 +51,7 @@ public class Controller implements  Runnable{
             simulation.update((sleep > 0 ? DELAY_FRAME : timeDiff ));
             ArrayList<Car> carsTmp = new ArrayList<Car>();
             ArrayList<Crossroad> crossroadsTmp = new ArrayList<Crossroad>();
+            ArrayList<SpawnPoint> spawnTmp = new ArrayList<SpawnPoint>();
 
               for(Car tmp : model.getCars()){
                   try {
@@ -67,6 +68,14 @@ public class Controller implements  Runnable{
                     e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 }
             }
+//            for(SpawnPoint tmp : model.getSpawnPoints()){
+//
+//                try {
+//                    spawnTmp.add((SpawnPoint)tmp.clone());
+//                } catch (CloneNotSupportedException e) {
+//                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+//                }
+//            }
 
 
             view.maziaj(carsTmp, crossroadsTmp);

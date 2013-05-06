@@ -24,7 +24,7 @@ public class Widok extends JPanel {
 
     private int[] horizontal;
     private int[] vertical;
-    private ImageIcon lewo, prawo, gora, dol;
+    private ImageIcon lewo, prawo, gora, dol, limit;
     boolean modelPoprawiony = false;
 
 
@@ -39,6 +39,7 @@ public class Widok extends JPanel {
         prawo = new ImageIcon(this.getClass().getResource("carPrawo.png"));
         gora = new ImageIcon(this.getClass().getResource("carGora.png"));
         dol = new ImageIcon(this.getClass().getResource("carDol.png"));
+        limit  =                 new ImageIcon(this.getClass().getResource("limit.png"));
 
 
 
@@ -60,36 +61,68 @@ public class Widok extends JPanel {
            // g2d.drawLine(verticalLine, 0, verticalLine, 500);
         }
 
-
-
-
-
         for (Crossroad tmp : crossroads) {
 
             Point cords = tmp.getPosition();
             g2d.setColor(Color.blue);
 
             g2d.drawRect(cords.x -20, cords.y-20, 40, 40);
-            Point hPoint, vPoint;
+            Point hPoint, vPoint, limitPoint, textPoint;
             hPoint = (Point)cords.clone();
-            vPoint =(Point)cords.clone();
+            vPoint = (Point)cords.clone();
+            limitPoint = (Point)cords.clone();
+            textPoint  = (Point)cords.clone();
             TrafficLight.LightColor light = tmp.getTrafficLightHorizontal().getColor();
             if(tmp.isAscendingHorizontal()){
                hPoint.x -= 25;
                hPoint.y += 15;
+               limitPoint.x += 25;
+               limitPoint.y += 25;
+               textPoint.x += 35;
+               textPoint.y += 45;
+
             }else{
                 hPoint.x += 15;
                 hPoint.y -= 25;
+                limitPoint.x -= 50;
+                limitPoint.y -= 50;
+                textPoint.x -= 40;
+                textPoint.y -= 30;
+
             }
+            g2d.drawImage(limit.getImage(), limitPoint.x, limitPoint.y, 30, 30, this);
+            g2d.drawString(String.valueOf(tmp.getIdSpeed()), textPoint.x, textPoint.y);
+
+            limitPoint = (Point)cords.clone();
+            textPoint  = (Point)cords.clone();
             if(tmp.isAscendingVertical()){
                 vPoint.x -= 25;
                 vPoint.y -= 25;
+                limitPoint.x -= 50;
+                limitPoint.y += 25;
+                textPoint.x -= 40;
+                textPoint.y += 45;
+
+
             }else{
                 vPoint.x += 15;
                 vPoint.y += 15;
+                limitPoint.x += 25;
+                limitPoint.y -= 50;
+                textPoint.x += 35;
+                textPoint.y -= 30;
+
             }
+
+
+
+            g2d.drawImage(limit.getImage(), limitPoint.x, limitPoint.y, 30, 30, this);
+            g2d.drawString(String.valueOf(tmp.getIdSpeed()), textPoint.x, textPoint.y);
             drawLight(g2d, tmp.getTrafficLightHorizontal().getColor(),hPoint);
             drawLight(g2d, tmp.getTrafficLightVertical().getColor(),vPoint);
+
+
+
 
         }
 
@@ -107,7 +140,6 @@ public class Widok extends JPanel {
                 g2d.drawImage(this.dol.getImage(), tmp.getBounds().x, tmp.getBounds().y, 10, 30, this);
             else if(!tmp.isHorizontal() && !tmp.isAscending())
                 g2d.drawImage(this.gora.getImage(), tmp.getBounds().x, tmp.getBounds().y, 10, 30, this);
-
         }
 
         Toolkit.getDefaultToolkit().sync();
@@ -118,7 +150,7 @@ public class Widok extends JPanel {
     public void maziaj(ArrayList<Car> kary, ArrayList<Crossroad> krosorldy) {
         cars = kary;
         crossroads = krosorldy;
-
+       // spawnPoints = spalny;
         repaint();
     }
 

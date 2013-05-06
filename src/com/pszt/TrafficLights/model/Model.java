@@ -20,12 +20,12 @@ public class Model implements Cloneable {
     /**
      * szerokość planszy na której sa skrzyżowania
      */
-    static public final int BOARD_WIDTH = 500;
+    static public final int BOARD_WIDTH = 1000;
 
     /**
      * wysokość planszy na której sa skrzyżowania
      */
-    static public final int BOARD_HEIGHT = 500;
+    static public final int BOARD_HEIGHT = 1000;
 
     /**
      * minimalna odległość miedzy dwoma drogami
