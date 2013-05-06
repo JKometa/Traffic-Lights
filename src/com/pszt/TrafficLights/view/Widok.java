@@ -86,11 +86,14 @@ public class Widok extends JPanel {
             drawLight(g2d, tmp.getTrafficLightVertical().getColor(),vPoint);
 
         }
-        g2d.setColor(Color.green);
+
 
         for (Car tmp : cars) {
+            g2d.setColor(Color.ORANGE);
+            g2d.draw(tmp.getHitBox());
+            g2d.setColor(Color.green);
+            g2d.fill(tmp.getBounds());
 
-            g2d.draw(tmp.getBounds());
         }
 
         Toolkit.getDefaultToolkit().sync();
