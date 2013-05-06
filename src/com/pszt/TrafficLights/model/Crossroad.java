@@ -85,6 +85,9 @@ public class Crossroad extends ModelLimitObject implements Cloneable {
             clone.trafficLightHorizontal = (TrafficLight)trafficLightHorizontal.clone();
             clone.trafficLightVertical = (TrafficLight)trafficLightVertical.clone();
             clone.stateRedGreen = this.stateRedGreen;
+            clone.ascendingVertical = this.ascendingVertical;
+            clone.ascendingHorizontal = this.ascendingHorizontal;
+            clone.timeToChangeLight = this.timeToChangeLight;
              return clone;
 
         } catch (CloneNotSupportedException e) {
