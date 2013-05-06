@@ -17,6 +17,11 @@ abstract class ModelLimitObject extends ModelObject implements Cloneable {
     private double speedLimit;
 
     /**
+     * Numer prędkości w przypadku posortowania rosnaco mozliwych predkosci
+     */
+    private int idSpeed;
+
+    /**
      * Konstruktor przyjmujacy wspolrzedne na ktorej bedzie sie znajdowac obiekt,
      * predkosc jest generowana losowo
      * @param x wspolrzedne x
@@ -27,6 +32,7 @@ abstract class ModelLimitObject extends ModelObject implements Cloneable {
         Random rand = new Random();
         int randInt = rand.nextInt(5);
         this.speedLimit = 0.01f + randInt * 0.002f;
+        idSpeed = randInt;
     }
 
     @Override
@@ -48,5 +54,9 @@ abstract class ModelLimitObject extends ModelObject implements Cloneable {
 
     public void setSpeedLimit(double speedLimit) {
         this.speedLimit = speedLimit;
+    }
+
+    public int getIdSpeed() {
+        return idSpeed;
     }
 }
