@@ -43,26 +43,27 @@ public class Widok extends JPanel {
         super.paint(g);
 
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(Color.blue);
+        g2d.setColor(Color.DARK_GRAY);
 
         for (int horizontalLine : horizontal) {
-            g2d.drawLine(0, horizontalLine, 1000, horizontalLine);
+            g2d.fillRect(0, horizontalLine - Model.ROAD_WIDTH/2, Model.BOARD_WIDTH, Model.ROAD_WIDTH);
+         //   g2d.drawLine(0, horizontalLine, 1000, horizontalLine);
         }
         for (int verticalLine : vertical) {
-            g2d.drawLine(verticalLine, 0, verticalLine, 500);
+            g2d.fillRect(verticalLine - Model.ROAD_WIDTH/2, 0 , Model.ROAD_WIDTH, Model.BOARD_HEIGHT);
+           // g2d.drawLine(verticalLine, 0, verticalLine, 500);
         }
-        g2d.setColor(Color.green);
 
 
-        for (Car tmp : cars) {
 
-            g2d.draw(tmp.getBounds());
-        }
+
 
         for (Crossroad tmp : crossroads) {
 
             Point cords = tmp.getPosition();
+            g2d.setColor(Color.blue);
 
+            g2d.drawRect(cords.x -20, cords.y-20, 40, 40);
             Point hPoint, vPoint;
             hPoint = (Point)cords.clone();
             vPoint =(Point)cords.clone();
@@ -83,10 +84,14 @@ public class Widok extends JPanel {
             }
             drawLight(g2d, tmp.getTrafficLightHorizontal().getColor(),hPoint);
             drawLight(g2d, tmp.getTrafficLightVertical().getColor(),vPoint);
-            g2d.setColor(Color.blue);
-            g2d.fillRect(cords.x -5, cords.y-5, 10, 10);
-        }
 
+        }
+        g2d.setColor(Color.green);
+
+        for (Car tmp : cars) {
+
+            g2d.draw(tmp.getBounds());
+        }
 
         Toolkit.getDefaultToolkit().sync();
         g.dispose();
