@@ -16,7 +16,7 @@ public class Controller implements  Runnable{
 
     private Simulation simulation;
     private Thread thread;
-    final private int DELAY_FRAME = 100;
+    final private int DELAY_FRAME = 1000;
 
     public Controller(Widok w) {
         this.view = w;

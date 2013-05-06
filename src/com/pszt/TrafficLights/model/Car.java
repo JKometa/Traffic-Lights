@@ -55,6 +55,8 @@ public class Car extends ModelLimitObject implements Cloneable {
     public Car(float x, float y, boolean horizontal, boolean ascending){
         super(x,y);
         this.horizontal = horizontal;
+//        System.out.println(horizontal);
+//        System.out.println(this.horizontal);
         this.ascending = ascending;
         this.crossroad = null;
     }
@@ -77,7 +79,7 @@ public class Car extends ModelLimitObject implements Cloneable {
         try {
             Car clone = (Car)super.clone();
             clone.ascending = this.ascending;
-            clone.horizontal = this.ascending;
+            clone.horizontal = this.horizontal;
             clone.speed = this.speed;
             clone.crossroad = this.crossroad;
             return clone;

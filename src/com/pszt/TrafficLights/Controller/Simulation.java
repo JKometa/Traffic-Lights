@@ -77,6 +77,7 @@ public class Simulation {
         for (Car car : model.getCars()){
             //rożnica przemieszczenia
             float deltaS = deltaTimeS * car.getSpeed() * SPEED_RATIO;
+//            System.out.println(deltaS);
 
             if (!car.isAscending()){
                 deltaS = - deltaS;
@@ -84,12 +85,18 @@ public class Simulation {
             Rectangle carBox = car.getBounds();
             Rectangle boardBox = model.getBounds();
 
+            System.out.println(carBox);
+
             if (car.isHorizontal()){
                 carBox.x += deltaS;
             } else {
                 carBox.y += deltaS;
             }
 
+//             System.out.println(carBox);
+//            System.out.println(car.isHorizontal());
+
+             /*
             //kolizje ze skrzyżowaniami
             if (car.isOnCrossroad()){
                 Rectangle crossroadBox = car.getCrossroad().getBounds();
@@ -122,8 +129,10 @@ public class Simulation {
                 }
             }
 
+            */
+
             //przesuwa samochodzik na wypadek jakby nie było kolizji
-            if (car.isHorizontal()){
+            if (!car.isHorizontal()){
                 car.setPositionY((float) carBox.getCenterY());
             } else{
                 car.setPositionX((float)carBox.getCenterX());
@@ -133,14 +142,18 @@ public class Simulation {
             if( boardBox.contains(carBox) || boardBox.intersects(carBox) ){
                 carsToDelete.add(car);
             }
+
+
+
         }
+
 
         //usuwa samochody które wyjechały za plansze
-        ArrayList< Car > cars = model.getCars();
-        for (Car carToDelete : carsToDelete){
-             cars.remove(carToDelete);
-        }
-
+//        ArrayList< Car > cars = model.getCars();
+//        for (Car carToDelete : carsToDelete){
+//             cars.remove(carToDelete);
+//        }
+        /*
         //spawnowanie samochodów
         if (spawnCars && model.updateTimeToRespawn(deltaTime)){
 
@@ -163,9 +176,14 @@ public class Simulation {
             //jeśli jest miejsce to tworzy i dodaje do kontenera nowy samochód, jeśli nie to nic nie robi
             if(clearForSpawn){
                 model.getCars().add(spawnPoint.spawn());
+
             }
 
+
+
         }
+            */
+//        System.out.println(model.getCars().get(0).toString());
 
     }
 

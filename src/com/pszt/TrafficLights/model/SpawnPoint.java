@@ -21,25 +21,31 @@ public class SpawnPoint extends ModelLimitObject {
      */
     private Car prototype;
 
-    public SpawnPoint(float x, float y) {
+    public SpawnPoint(int x, int y, boolean horizontal, boolean ascending) {
         super(x, y);
-        boolean horizontal;
-        if ( x > 0 && x < Model.BOARD_WIDTH){
-            horizontal = false;
-            if ( y == 0){
-                prototype = new Car(x, y - Car.WIDTH_HORIZONTAL / 2, horizontal, true);
-            }
-            else{
-                prototype = new Car(x, y + Car.WIDTH_HORIZONTAL / 2, horizontal, false);
-            }
-        } else{
-            horizontal = true;
-            if ( x == 0){
-                prototype = new Car(x - Car.WIDTH_HORIZONTAL / 2, y, horizontal, true);
-            } else {
-                prototype = new Car(x + Car.WIDTH_HORIZONTAL / 2, y, horizontal, false);
-            }
-        }
+//        boolean horizontal, ascending;
+//        if ( x > 0 && x < Model.BOARD_WIDTH){
+//            horizontal = false;
+//            if ( y == 0){
+////                prototype = new Car(x, y - Car.WIDTH_HORIZONTAL / 2, horizontal, true);
+//                ascending = true;
+//            }
+//            else{
+////                prototype = new Car(x, y + Car.WIDTH_HORIZONTAL / 2, horizontal, false);
+//                ascending = false;
+//            }
+//        } else{
+//            horizontal = true;
+//            if ( x == 0){
+////                prototype = new Car(x - Car.WIDTH_HORIZONTAL / 2, y, horizontal, true);
+//                ascending = true;
+//            } else {
+////                prototype = new Car(x + Car.WIDTH_HORIZONTAL / 2, y, horizontal, false);
+//                ascending = false;
+//            }
+//        }
+
+        prototype = new Car(x, y, horizontal, ascending);
 
         prototype.setSpeed(this.getSpeedLimit());
     }

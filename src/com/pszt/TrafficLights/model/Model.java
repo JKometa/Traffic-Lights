@@ -87,14 +87,14 @@ public class Model implements Cloneable {
 
         ArrayList < SpawnPoint > horizontalSpawnPoints = new ArrayList<SpawnPoint>();
         for (int y : horizontal){
-             boolean ascending = generator.nextBoolean();
-             horizontalSpawnPoints.add(new SpawnPoint((ascending ? 0 : BOARD_WIDTH), y));
+             boolean ascending =  generator.nextBoolean();
+             horizontalSpawnPoints.add(new SpawnPoint((ascending ? 0 : BOARD_WIDTH), y, true, ascending));
         }
 
         ArrayList < SpawnPoint > verticalSpawnPoints = new ArrayList<SpawnPoint>();
         for (int x : vertical){
             boolean ascending = generator.nextBoolean();
-            verticalSpawnPoints.add(new SpawnPoint(x, (ascending ? 0 : BOARD_HEIGHT)));
+            verticalSpawnPoints.add(new SpawnPoint(x, (ascending ? 0 : BOARD_HEIGHT), false, ascending));
         }
 
         for (SpawnPoint y : horizontalSpawnPoints){
@@ -114,6 +114,8 @@ public class Model implements Cloneable {
         for (SpawnPoint spawn : spawnPoints){
             cars.add(spawn.spawn());
         }
+
+//        cars.add(spawnPoints.get(2).spawn() );
     }
 
     @Override

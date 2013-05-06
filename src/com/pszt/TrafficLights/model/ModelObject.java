@@ -63,6 +63,14 @@ abstract class ModelObject implements Cloneable {
         this.y = y;
     }
 
+    @Override
+    public String toString() {
+        return "ModelObject{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
+
     /**
      *  getBounds
      * @return kwadrat jaki zajmuje dany obiekt na mapie
