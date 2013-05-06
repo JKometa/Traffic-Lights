@@ -76,10 +76,13 @@ public class Car extends ModelLimitObject implements Cloneable {
     @Override
     public Rectangle getHitBox() {
         Rectangle hitBox = getBounds();
-        hitBox.x -= MARGIN;
-        hitBox.y -= MARGIN;
-        hitBox.width += 2 * MARGIN;
-        hitBox.height += 2 *MARGIN;
+        if (horizontal){
+            hitBox.x -= MARGIN;
+            hitBox.width += 2 * MARGIN;
+        } else{
+            hitBox.y -= MARGIN;
+            hitBox.height += 2 * MARGIN;
+        }
         return hitBox;
     }
 
