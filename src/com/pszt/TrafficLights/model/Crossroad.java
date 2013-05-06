@@ -136,10 +136,11 @@ public class Crossroad extends ModelLimitObject implements Cloneable {
 
     @Override
     public Rectangle getHitBox() {
-        return new Rectangle((int)(x - Model.ROAD_WIDTH / 2 + Car.MARGIN),
-                (int)( y - Model.ROAD_WIDTH / 2 + Car.MARGIN),
-                Model.ROAD_WIDTH + 2 * Car.MARGIN,
-                Model.ROAD_WIDTH + 2 * Car.MARGIN);
+        return getBounds();
+//        return new Rectangle((int)(x - Model.ROAD_WIDTH / 2 - Car.MARGIN),
+//                (int)( y - Model.ROAD_WIDTH / 2 - Car.MARGIN),
+//                Model.ROAD_WIDTH + 2 * Car.MARGIN,
+//                Model.ROAD_WIDTH + 2 * Car.MARGIN);
     }
 
     public void updateLight(long deltaTime){

@@ -20,7 +20,7 @@ public class Model implements Cloneable {
     /**
      * szerokość planszy na której sa skrzyżowania
      */
-    static public final int BOARD_WIDTH = 1000;
+    static public final int BOARD_WIDTH = 500;
 
     /**
      * wysokość planszy na której sa skrzyżowania
@@ -88,7 +88,7 @@ public class Model implements Cloneable {
         numberOfHorizontalRoads = 2;
         numberOfVerticalRoads = 2;
 
-        int[] horizontal = {320, 444};
+        int[] horizontal = {250, 444};
         int[] vertical = {200, 366};
 
         horizontalLines = horizontal;

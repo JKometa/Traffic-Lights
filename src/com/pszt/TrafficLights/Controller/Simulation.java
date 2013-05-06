@@ -81,7 +81,8 @@ public class Simulation {
 
             car.move(deltaS);
 
-            Rectangle carBox = car.getHitBox();
+            Rectangle carBox = car.getBounds();
+            Rectangle carHitBox = car.getHitBox();
             Rectangle boardBox = model.getBounds();
 
 
@@ -99,10 +100,11 @@ public class Simulation {
                                 crossroad.getTrafficLightHorizontal() : crossroad.getTrafficLightVertical());
                         if(light.isGreen()){
                             car.setCrossroad(crossroad);
+                            car.setSpeed(crossroad.getSpeedLimit());
                         } else{
 //                            car.setPositionBefore(crossroad);
                             car.move(-deltaS);
-                            carBox = car.getHitBox();
+                            carHitBox = car.getHitBox();
                         }
                         break;
                     }
@@ -111,16 +113,15 @@ public class Simulation {
 
             //kolizje z innymi samochodami
             for(Car collisionCar : model.getCars()){
-                if(car != collisionCar && carBox.intersects(collisionCar.getHitBox())){
+                if(car != collisionCar && carHitBox.intersects(collisionCar.getHitBox())){
 //                    car.setPositionBefore(collisionCar);
                     car.move(-deltaS);
-                    carBox = car.getHitBox();
                     break;
                 }
             }
 
 
-            carBox = car.getBounds();
+
             //sprawdza czy samochód nie wyjechał za plansze
             if( !boardBox.contains(carBox) && !boardBox.intersects(carBox) ){
 //                System.out.println("Usuwam samochod! " + car.toString());

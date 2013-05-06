@@ -13,7 +13,7 @@ import java.awt.*;
  * jednoczesnie jest poczatkiem drogi
  */
 
-public class SpawnPoint extends ModelLimitObject {
+public class SpawnPoint extends ModelLimitObject implements Cloneable {
 
 
     /**
@@ -23,31 +23,21 @@ public class SpawnPoint extends ModelLimitObject {
 
     public SpawnPoint(int x, int y, boolean horizontal, boolean ascending) {
         super(x, y);
-//        boolean horizontal, ascending;
-//        if ( x > 0 && x < Model.BOARD_WIDTH){
-//            horizontal = false;
-//            if ( y == 0){
-////                prototype = new Car(x, y - Car.WIDTH_HORIZONTAL / 2, horizontal, true);
-//                ascending = true;
-//            }
-//            else{
-////                prototype = new Car(x, y + Car.WIDTH_HORIZONTAL / 2, horizontal, false);
-//                ascending = false;
-//            }
-//        } else{
-//            horizontal = true;
-//            if ( x == 0){
-////                prototype = new Car(x - Car.WIDTH_HORIZONTAL / 2, y, horizontal, true);
-//                ascending = true;
-//            } else {
-////                prototype = new Car(x + Car.WIDTH_HORIZONTAL / 2, y, horizontal, false);
-//                ascending = false;
-//            }
-//        }
-
         prototype = new Car(x, y, horizontal, ascending);
 
         prototype.setSpeed(this.getSpeedLimit());
+    }
+
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        try {
+            SpawnPoint clone = (SpawnPoint)super.clone();
+            clone.prototype = (Car)this.prototype.clone();
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            return null;
+        }
     }
 
     /**

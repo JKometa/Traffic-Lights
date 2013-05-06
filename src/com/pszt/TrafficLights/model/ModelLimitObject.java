@@ -42,11 +42,11 @@ abstract class ModelLimitObject extends ModelObject implements Cloneable {
     }
 
 
-    double getSpeedLimit() {
+    public double getSpeedLimit() {
         return speedLimit;
     }
 
-    void setSpeedLimit(double speedLimit) {
+    public void setSpeedLimit(double speedLimit) {
         this.speedLimit = speedLimit;
     }
 }
