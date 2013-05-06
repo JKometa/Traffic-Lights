@@ -63,6 +63,16 @@ public class Model implements Cloneable {
     final static private int MIN_SPAWN_TIME = 1000;
 
     /**
+     * współrzędne y linie poziomych
+     */
+    int[] horizontalLines;
+
+    /**
+     * współrzędne x linii pionowych
+     */
+    int[] verticalLines;
+
+    /**
      * generuje model z odpowiednia ilością dróg
      * @param numberOfHorizontalRoads ilość dróg poziomych
      * @param numberOfVerticalRoads ilość dróg pionowych
@@ -81,7 +91,8 @@ public class Model implements Cloneable {
         int[] horizontal = {320, 444};
         int[] vertical = {200, 366};
 
-
+        horizontalLines = horizontal;
+        verticalLines = vertical;
 
         Random generator = new Random();
 
@@ -164,6 +175,14 @@ public class Model implements Cloneable {
 
     public ArrayList<SpawnPoint> getSpawnPoints() {
         return spawnPoints;
+    }
+
+    public int[] getHorizontalLines() {
+        return horizontalLines;
+    }
+
+    public int[] getVerticalLines() {
+        return verticalLines;
     }
 
     /**
