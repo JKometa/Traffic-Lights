@@ -75,7 +75,7 @@ public class Car extends ModelLimitObject implements Cloneable {
 
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         try {
             Car clone = (Car)super.clone();
             clone.ascending = this.ascending;
