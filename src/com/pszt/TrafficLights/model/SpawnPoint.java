@@ -77,5 +77,8 @@ public class SpawnPoint extends ModelLimitObject {
         return prototype.getBounds();
     }
 
-
+    @Override
+    public Rectangle getHitBox() {
+        return prototype.getHitBox();
+    }
 }

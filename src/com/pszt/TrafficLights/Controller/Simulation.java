@@ -81,27 +81,28 @@ public class Simulation {
 
             car.move(deltaS);
 
-            Rectangle carBox = car.getBounds();
+            Rectangle carBox = car.getHitBox();
             Rectangle boardBox = model.getBounds();
 
-             /*
+
             //kolizje ze skrzyżowaniami
             if (car.isOnCrossroad()){
-                Rectangle crossroadBox = car.getCrossroad().getBounds();
+                Rectangle crossroadBox = car.getCrossroad().getHitBox();
                 if(!(crossroadBox.intersects(carBox) || crossroadBox.contains(carBox))){
                     car.setCrossroad(null);
                 }
             } else{
                 for(Crossroad crossroad : model.getCrossroads()){
-                    Rectangle crossroadBox = crossroad.getBounds();
+                    Rectangle crossroadBox = crossroad.getHitBox();
                     if(crossroadBox.intersects(carBox) || crossroadBox.contains(carBox)){
                         TrafficLight light = (car.isHorizontal() ?
                                 crossroad.getTrafficLightHorizontal() : crossroad.getTrafficLightVertical());
                         if(light.isGreen()){
                             car.setCrossroad(crossroad);
                         } else{
-                            car.setPositionBefore(crossroad);
-                            carBox = car.getBounds();
+//                            car.setPositionBefore(crossroad);
+                            car.move(-deltaS);
+                            carBox = car.getHitBox();
                         }
                         break;
                     }
@@ -110,19 +111,20 @@ public class Simulation {
 
             //kolizje z innymi samochodami
             for(Car collisionCar : model.getCars()){
-                if(carBox.intersects(collisionCar.getBounds())){
-                    car.setPositionBefore(collisionCar);
-                    carBox = car.getBounds();
+                if(car != collisionCar && carBox.intersects(collisionCar.getHitBox())){
+//                    car.setPositionBefore(collisionCar);
+                    car.move(-deltaS);
+                    carBox = car.getHitBox();
                     break;
                 }
             }
 
-            */
 
+            carBox = car.getBounds();
             //sprawdza czy samochód nie wyjechał za plansze
             if( !boardBox.contains(carBox) && !boardBox.intersects(carBox) ){
-                System.out.println("Usuwam samochod! " + car.toString());
-//                carsToDelete.add(car);
+//                System.out.println("Usuwam samochod! " + car.toString());
+                carsToDelete.add(car);
             }
 
 
@@ -144,12 +146,12 @@ public class Simulation {
             ArrayList< SpawnPoint > spawnPoints = model.getSpawnPoints();
             int losuj = generator.nextInt(spawnPoints.size());
             SpawnPoint spawnPoint = spawnPoints.get(losuj);
-            Rectangle spawnBox = spawnPoint.getBounds();
+            Rectangle spawnBox = spawnPoint.getHitBox();
 
             //sprawdza czy jest miejsce dla nowego samochodu z tego spawn pointa
             boolean clearForSpawn = true;
             for(Car car : model.getCars()){
-                if(spawnBox.intersects(car.getBounds())){
+                if(spawnBox.intersects(car.getHitBox())){
                     clearForSpawn = false;
                     break;
                 }

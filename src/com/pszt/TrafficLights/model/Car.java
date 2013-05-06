@@ -27,7 +27,7 @@ public class Car extends ModelLimitObject implements Cloneable {
      * minimalny odstęp jakie muszą zachować samochody miedzy sobą,
      *  a także samochód od "zamkniętego" skrzyżowania
      */
-    static final private int MARGIN = 10;
+    static final int MARGIN = 10;
 
     /**
      * Okresla czy pojazd porusza sie pionowo czy poziomo
@@ -73,6 +73,15 @@ public class Car extends ModelLimitObject implements Cloneable {
         return bounds;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @Override
+    public Rectangle getHitBox() {
+        Rectangle hitBox = getBounds();
+        hitBox.x -= MARGIN;
+        hitBox.y -= MARGIN;
+        hitBox.width += 2 * MARGIN;
+        hitBox.height += 2 *MARGIN;
+        return hitBox;
+    }
 
     @Override
     public Object clone() throws CloneNotSupportedException {

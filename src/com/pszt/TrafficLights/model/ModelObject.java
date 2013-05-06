@@ -76,4 +76,13 @@ abstract class ModelObject implements Cloneable {
      * @return kwadrat jaki zajmuje dany obiekt na mapie
      */
     abstract public Rectangle getBounds();
+
+    /**
+     * HitBox - kwadrat używany do detekcji kolizji
+     * @return zwraca kwadrat robiący za hitboxa, jeśli dany samochodzik ma wielkość
+     *  szerokość x wysokość, to hit box danego samochodzika ma
+     *  szerokość + margines x wysokość + margines,
+     *  aby samochody nie jechały zderzak w zderzak
+     */
+    abstract public Rectangle getHitBox();
 }
