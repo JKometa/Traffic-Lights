@@ -62,13 +62,28 @@ public class Widok extends JPanel {
         for (Crossroad tmp : crossroads) {
 
             Point cords = tmp.getPosition();
+
+            Point hPoint, vPoint;
+            hPoint = (Point)cords.clone();
+            vPoint =(Point)cords.clone();
             TrafficLight.LightColor light = tmp.getTrafficLightHorizontal().getColor();
-            if (light == TrafficLight.LightColor.GREEN)
-                g2d.setColor(Color.green);
-            else if (light == TrafficLight.LightColor.RED)
-                g2d.setColor(Color.red);
-            else
-                g2d.setColor(Color.yellow);
+            if(tmp.isAscendingHorizontal()){
+               hPoint.x -= 25;
+               hPoint.y += 15;
+            }else{
+                hPoint.x += 15;
+                hPoint.y -= 25;
+            }
+            if(tmp.isAscendingVertical()){
+                vPoint.x -= 25;
+                vPoint.y -= 25;
+            }else{
+                vPoint.x += 15;
+                vPoint.y += 15;
+            }
+            drawLight(g2d, tmp.getTrafficLightHorizontal().getColor(),hPoint);
+            drawLight(g2d, tmp.getTrafficLightVertical().getColor(),vPoint);
+            g2d.setColor(Color.blue);
             g2d.fillRect(cords.x -5, cords.y-5, 10, 10);
         }
 
@@ -93,6 +108,17 @@ public class Widok extends JPanel {
     public void setVerticalLines(int[] lines) {
         vertical = lines;
 
+    }
+
+    private void drawLight(Graphics2D g2d, TrafficLight.LightColor light, Point p){
+
+        if (light == TrafficLight.LightColor.GREEN)
+            g2d.setColor(Color.green);
+        else if (light == TrafficLight.LightColor.RED)
+            g2d.setColor(Color.red);
+        else
+            g2d.setColor(Color.yellow);
+        g2d.fillRect(p.x, p.y, 10, 10);
     }
 
 }
