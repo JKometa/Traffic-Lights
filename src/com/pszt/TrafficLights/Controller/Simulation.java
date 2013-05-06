@@ -17,19 +17,8 @@ import java.util.Random;
  * Klasa robiąca całą logikę na modelu
  */
 public class Simulation {
-    /**
-     * przelicznik prędkości
-     */
-    final static private float SPEED_RATIO = 1.0f; //3.0f / 10.0f;
-
 
     private Model model;
-
-
-    /**
-     * z jaka szybkością ma sie odbywać symulacja
-     */
-    private int scaleTime;
 
     /**
      * określa czy nowe samochody wjeżdżają na plansze
@@ -40,7 +29,6 @@ public class Simulation {
 
     public Simulation(Model model) {
         this.model = model;
-        scaleTime = 1;
         spawnCars = true;
     }
 
@@ -48,9 +36,6 @@ public class Simulation {
         this.spawnCars = spawnCars;
     }
 
-    public void setScaleTime(int scaleTime) {
-        this.scaleTime = scaleTime;
-    }
 
     /**
      * tu sie będzie działa cala logika
@@ -58,17 +43,10 @@ public class Simulation {
      */
     public void update(long deltaTime){
 
-        deltaTime *= scaleTime;
-
-
         //update świateł
         for (Crossroad crossroad: model.getCrossroads()){
             crossroad.updateLight(deltaTime);
         }
-
-
-        // rożnica czasu w sekundach
-//        float deltaTimeS = deltaTime / 1000;
 
         ArrayList< Car > carsToDelete = new ArrayList<Car>();
 
@@ -76,15 +54,12 @@ public class Simulation {
         // poruszanie samochodami i kolizje
         for (Car car : model.getCars()){
             //rożnica przemieszczenia
-            double deltaS = deltaTime * car.getSpeed() * SPEED_RATIO;
-//            System.out.println(deltaS);
-
+            double deltaS = deltaTime * car.getSpeed();
             car.move(deltaS);
 
             Rectangle carBox = car.getBounds();
             Rectangle carHitBox = car.getHitBox();
             Rectangle boardBox = model.getBounds();
-
 
             //kolizje ze skrzyżowaniami
             if (car.isOnCrossroad()){
@@ -102,7 +77,6 @@ public class Simulation {
                             car.setCrossroad(crossroad);
                             car.setSpeed(crossroad.getSpeedLimit());
                         } else{
-//                            car.setPositionBefore(crossroad);
                             car.move(-deltaS);
                             carHitBox = car.getHitBox();
                         }
@@ -114,24 +88,17 @@ public class Simulation {
             //kolizje z innymi samochodami
             for(Car collisionCar : model.getCars()){
                 if(car != collisionCar && carHitBox.intersects(collisionCar.getHitBox())){
-//                    car.setPositionBefore(collisionCar);
                     car.move(-deltaS);
                     break;
                 }
             }
 
-
-
             //sprawdza czy samochód nie wyjechał za plansze
             if( !boardBox.contains(carBox) && !boardBox.intersects(carBox) ){
-//                System.out.println("Usuwam samochod! " + car.toString());
                 carsToDelete.add(car);
             }
 
-
-
         }
-
 
 //        usuwa samochody które wyjechały za plansze
         ArrayList< Car > cars = model.getCars();
@@ -139,10 +106,10 @@ public class Simulation {
              cars.remove(carToDelete);
         }
 
-        //spawnowanie samochodów
+//        spawnowanie samochodów
         if (spawnCars && model.updateTimeToRespawn(deltaTime)){
 
-            //losuje z którego spawn pointa ma sie zrespić samochód
+//            losuje z którego spawn pointa ma sie zrespić samochód
             Random generator = new Random();
             ArrayList< SpawnPoint > spawnPoints = model.getSpawnPoints();
             int losuj = generator.nextInt(spawnPoints.size());
@@ -163,12 +130,7 @@ public class Simulation {
                 model.getCars().add(spawnPoint.spawn());
 
             }
-
-
-
         }
-
-
     }
 
 }
