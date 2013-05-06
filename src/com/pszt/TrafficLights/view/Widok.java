@@ -24,7 +24,7 @@ public class Widok extends JPanel {
 
     private int[] horizontal;
     private int[] vertical;
-
+    private ImageIcon lewo, prawo, gora, dol;
     boolean modelPoprawiony = false;
 
 
@@ -35,6 +35,12 @@ public class Widok extends JPanel {
         crossroads = m.getCrossroads();
         spawnPoints = m.getSpawnPoints();
         cars = m.getCars();
+        lewo = new ImageIcon(this.getClass().getResource("carLewo.png"));
+        prawo = new ImageIcon(this.getClass().getResource("carPrawo.png"));
+        gora = new ImageIcon(this.getClass().getResource("carGora.png"));
+        dol = new ImageIcon(this.getClass().getResource("carDol.png"));
+
+
 
     }
 
@@ -91,8 +97,16 @@ public class Widok extends JPanel {
         for (Car tmp : cars) {
             g2d.setColor(Color.ORANGE);
             g2d.draw(tmp.getHitBox());
-            g2d.setColor(Color.green);
-            g2d.fill(tmp.getBounds());
+          //  g2d.setColor(Color.green);
+          //  g2d.fill(tmp.getBounds());
+            if(tmp.isHorizontal() && tmp.isAscending())
+                g2d.drawImage(this.prawo.getImage(), tmp.getBounds().x, tmp.getBounds().y, 30, 10, this);
+            else if(tmp.isHorizontal() && !tmp.isAscending())
+                g2d.drawImage(this.lewo.getImage(), tmp.getBounds().x, tmp.getBounds().y, 30, 10, this);
+            else if(!tmp.isHorizontal() && tmp.isAscending())
+                g2d.drawImage(this.dol.getImage(), tmp.getBounds().x, tmp.getBounds().y, 10, 30, this);
+            else if(!tmp.isHorizontal() && !tmp.isAscending())
+                g2d.drawImage(this.gora.getImage(), tmp.getBounds().x, tmp.getBounds().y, 10, 30, this);
 
         }
 
