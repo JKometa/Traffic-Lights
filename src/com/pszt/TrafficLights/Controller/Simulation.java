@@ -20,7 +20,7 @@ public class Simulation {
     /**
      * przelicznik prędkości
      */
-    final static private float SPEED_RATIO = 1.0f / 10.0f;
+    final static private float SPEED_RATIO = 1.0f; //3.0f / 10.0f;
 
 
     private Model model;
@@ -68,7 +68,7 @@ public class Simulation {
 
 
         // rożnica czasu w sekundach
-        float deltaTimeS = deltaTime / 1000;
+//        float deltaTimeS = deltaTime / 1000;
 
         ArrayList< Car > carsToDelete = new ArrayList<Car>();
 
@@ -76,25 +76,13 @@ public class Simulation {
         // poruszanie samochodami i kolizje
         for (Car car : model.getCars()){
             //rożnica przemieszczenia
-            float deltaS = deltaTimeS * car.getSpeed() * SPEED_RATIO;
+            double deltaS = deltaTime * car.getSpeed() * SPEED_RATIO;
 //            System.out.println(deltaS);
 
-            if (!car.isAscending()){
-                deltaS = - deltaS;
-            }
+            car.move(deltaS);
+
             Rectangle carBox = car.getBounds();
             Rectangle boardBox = model.getBounds();
-
-            System.out.println(carBox);
-
-            if (car.isHorizontal()){
-                carBox.x += deltaS;
-            } else {
-                carBox.y += deltaS;
-            }
-
-//             System.out.println(carBox);
-//            System.out.println(car.isHorizontal());
 
              /*
             //kolizje ze skrzyżowaniami
@@ -131,16 +119,10 @@ public class Simulation {
 
             */
 
-            //przesuwa samochodzik na wypadek jakby nie było kolizji
-            if (!car.isHorizontal()){
-                car.setPositionY((float) carBox.getCenterY());
-            } else{
-                car.setPositionX((float)carBox.getCenterX());
-            }
-
             //sprawdza czy samochód nie wyjechał za plansze
-            if( boardBox.contains(carBox) || boardBox.intersects(carBox) ){
-                carsToDelete.add(car);
+            if( !boardBox.contains(carBox) && !boardBox.intersects(carBox) ){
+                System.out.println("Usuwam samochod! " + car.toString());
+//                carsToDelete.add(car);
             }
 
 
@@ -148,12 +130,12 @@ public class Simulation {
         }
 
 
-        //usuwa samochody które wyjechały za plansze
-//        ArrayList< Car > cars = model.getCars();
-//        for (Car carToDelete : carsToDelete){
-//             cars.remove(carToDelete);
-//        }
-        /*
+//        usuwa samochody które wyjechały za plansze
+        ArrayList< Car > cars = model.getCars();
+        for (Car carToDelete : carsToDelete){
+             cars.remove(carToDelete);
+        }
+
         //spawnowanie samochodów
         if (spawnCars && model.updateTimeToRespawn(deltaTime)){
 
@@ -182,8 +164,7 @@ public class Simulation {
 
 
         }
-            */
-//        System.out.println(model.getCars().get(0).toString());
+
 
     }
 

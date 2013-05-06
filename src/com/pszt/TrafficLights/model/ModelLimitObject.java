@@ -14,7 +14,7 @@ abstract class ModelLimitObject extends ModelObject implements Cloneable {
     /**
      * Ograniczenie predkosci na odcinku ktory zaczyna sie ModelLimitObject
      */
-    private int speedLimit;
+    private double speedLimit;
 
     /**
      * Konstruktor przyjmujacy wspolrzedne na ktorej bedzie sie znajdowac obiekt,
@@ -22,11 +22,11 @@ abstract class ModelLimitObject extends ModelObject implements Cloneable {
      * @param x wspolrzedne x
      * @param y wspolrzedne y
      */
-    protected ModelLimitObject(float x, float y) {
+    protected ModelLimitObject(double x, double y) {
         super(x, y);
         Random rand = new Random();
         int randInt = rand.nextInt(5);
-        this.speedLimit = 40 + randInt * 10;
+        this.speedLimit = 0.01f + randInt * 0.002f;
     }
 
     @Override
@@ -42,11 +42,11 @@ abstract class ModelLimitObject extends ModelObject implements Cloneable {
     }
 
 
-    int getSpeedLimit() {
+    double getSpeedLimit() {
         return speedLimit;
     }
 
-    void setSpeedLimit(int speedLimit) {
+    void setSpeedLimit(double speedLimit) {
         this.speedLimit = speedLimit;
     }
 }

@@ -25,12 +25,12 @@ public class Model implements Cloneable {
     /**
      * wysokość planszy na której sa skrzyżowania
      */
-    static final int BOARD_HEIGHT = 1000;
+    static final int BOARD_HEIGHT = 500;
 
     /**
      * minimalna odległość miedzy dwoma drogami
      */
-    static private final int BOARD_MARGIN = 100;
+    static private final int BOARD_MARGIN = 500;
 
     /**
      * kontener przechowujący wszystkie samochody na planszy
@@ -78,8 +78,10 @@ public class Model implements Cloneable {
         numberOfHorizontalRoads = 2;
         numberOfVerticalRoads = 2;
 
-        int[] horizontal = {320, 777};
-        int[] vertical = {200, 555};
+        int[] horizontal = {320, 444};
+        int[] vertical = {200, 366};
+
+
 
         Random generator = new Random();
 

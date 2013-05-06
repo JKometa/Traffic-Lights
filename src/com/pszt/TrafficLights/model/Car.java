@@ -42,7 +42,7 @@ public class Car extends ModelLimitObject implements Cloneable {
     /**
      * prędkość z jaka porusza sie samochód
      */
-    private int speed;
+    private double speed;
 
     /**
      * skrzyżowanie na którym sie znajduje samochód,
@@ -52,7 +52,7 @@ public class Car extends ModelLimitObject implements Cloneable {
 
 
 
-    public Car(float x, float y, boolean horizontal, boolean ascending){
+    public Car(double x, double y, boolean horizontal, boolean ascending){
         super(x,y);
         this.horizontal = horizontal;
 //        System.out.println(horizontal);
@@ -96,11 +96,11 @@ public class Car extends ModelLimitObject implements Cloneable {
         return ascending;
     }
 
-    public int getSpeed() {
+    public double getSpeed() {
         return speed;
     }
 
-    public void setSpeed(int speed) {
+    public void setSpeed(double speed) {
         this.speed = speed;
     }
 
@@ -119,6 +119,21 @@ public class Car extends ModelLimitObject implements Cloneable {
     public void setCrossroad(Crossroad crossroad) {
         this.crossroad = crossroad;
     }
+
+
+    public void move(double deltaS){
+        if(!ascending)
+            deltaS = - deltaS;
+
+        if(horizontal)
+            x += deltaS;
+        else
+            y += deltaS;
+
+
+    }
+
+
 
     /**
      * ustawia samochód za innym samochodem zachowując wymagany odstęp

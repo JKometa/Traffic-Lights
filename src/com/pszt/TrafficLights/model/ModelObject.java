@@ -12,10 +12,10 @@ import java.awt.Point;
  *  Abstrakcyjna klasa przedstawiajaca wszystko co ma swoje polozenie na mapie
  */
 abstract class ModelObject implements Cloneable {
-    protected float x;
-    protected float y;
+    protected double x;
+    protected double y;
 
-    protected ModelObject(float x, float y) {
+    protected ModelObject(double x, double y) {
         this.x = x;
         this.y = y;
     }
@@ -37,7 +37,7 @@ abstract class ModelObject implements Cloneable {
         this.y = position.y;
     }
 
-    public void setPosition(float x, float y){
+    public void setPosition(double x, double y){
         this.x = x;
         this.y = y;
     }
@@ -47,19 +47,19 @@ abstract class ModelObject implements Cloneable {
        return new Point((int)x, (int)y);
    }
 
-    public float getPositionX() {
+    public double getPositionX() {
         return x;
     }
 
-    public void setPositionX(float x) {
+    public void setPositionX(double x) {
         this.x = x;
     }
 
-    public float getPositionY() {
+    public double getPositionY() {
         return y;
     }
 
-    public void setPositionY(float y) {
+    public void setPositionY(double y) {
         this.y = y;
     }
 

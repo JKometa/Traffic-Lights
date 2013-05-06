@@ -68,7 +68,7 @@ public class Crossroad extends ModelLimitObject implements Cloneable {
      */
     private boolean stateRedGreen;
 
-    public Crossroad(float x, float y, boolean ascendingHorizontal, boolean ascendingVertical) {
+    public Crossroad(double x, double y, boolean ascendingHorizontal, boolean ascendingVertical) {
         super(x, y);
         this.ascendingHorizontal = ascendingHorizontal;
         this.ascendingVertical = ascendingVertical;
