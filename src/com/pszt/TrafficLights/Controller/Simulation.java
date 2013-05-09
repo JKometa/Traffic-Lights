@@ -106,7 +106,7 @@ public class Simulation {
         ArrayList< Car > cars = model.getCars();
         for (Car carToDelete : carsToDelete){
              model.updateAverageTimeInTraffic(carToDelete.getTimeInTraffic());
-            System.out.println(model.getAverageTimeInTraffic());
+//            System.out.println(model.getAverageTimeInTraffic());
              cars.remove(carToDelete);
         }
 

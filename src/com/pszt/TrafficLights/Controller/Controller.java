@@ -8,6 +8,7 @@ import com.pszt.TrafficLights.view.Widok;
 
 import java.awt.*;
 import java.util.ArrayList;
+import com.pszt.TrafficLights.Ewolucja.Populacja;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,14 +19,24 @@ import java.util.ArrayList;
  */
 public class Controller implements  Runnable{
     private Model model;
+    private Model copyModel;
     private Widok view;
 
     private Simulation simulation;
     private Thread thread;
     final private int DELAY_FRAME = 100;
 
+    private Populacja populacja;
+
+    /**
+     * ostatnio odczytane pokolenie z populacji
+     */
+    private int pokolenie;
+
     public Controller(Widok w) {
         this.view = w;
+
+
 
     }
 
@@ -49,6 +60,19 @@ public class Controller implements  Runnable{
             }
 
             simulation.update((sleep > 0 ? DELAY_FRAME : timeDiff ));
+            try {
+                copyModel = (Model)model.clone();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+
+            if(pokolenie < populacja.getIloscPokolen()){
+                model.setIntervalsOnCrossroads(populacja.getNajlepszeOkresy());
+                pokolenie = populacja.getIloscPokolen();
+                System.out.println("ustawiam swiatla wg nowego pokolenia! " + pokolenie);
+            }
+
+
             ArrayList<Car> carsTmp = new ArrayList<Car>();
             ArrayList<Crossroad> crossroadsTmp = new ArrayList<Crossroad>();
             ArrayList<SpawnPoint> spawnTmp = new ArrayList<SpawnPoint>();
@@ -90,12 +114,26 @@ public class Controller implements  Runnable{
     public void start(){
         thread = new Thread(this);
         thread.start();
+        populacja.start();
+
+    }
+
+    public Model getCopyModel() {
+        return copyModel;
     }
 
     public void setModel(Model model) {
         this.model = model;
         view.setHorizonalLines(model.getHorizontalLines());
         view.setVerticalLines(model.getVerticalLines());
+
+        try {
+            copyModel = (Model)model.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+
+        this.populacja = new Populacja(this);
         this.simulation = new Simulation(model);
     }
 

@@ -20,12 +20,12 @@ public class Model implements Cloneable {
     /**
      * szerokość planszy na której sa skrzyżowania
      */
-    static public final int BOARD_WIDTH = 1000;
+    static public final int BOARD_WIDTH = 500;
 
     /**
      * wysokość planszy na której sa skrzyżowania
      */
-    static public final int BOARD_HEIGHT = 1000;
+    static public final int BOARD_HEIGHT = 500;
 
     /**
      * minimalna odległość miedzy dwoma drogami
@@ -228,6 +228,10 @@ public class Model implements Cloneable {
 
     public int getNumberOfCrossroads() {
         return numberOfCrossroads;
+    }
+
+    public int getNumberOfCars(){
+        return cars.size();
     }
 
     public void setIntervalsOnCrossroads(long[] intervals){

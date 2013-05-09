@@ -1,6 +1,7 @@
 package com.pszt.TrafficLights.Ewolucja;
 
-import java.util.ArrayList;
+import java.util.Random;
+import java.lang.Math;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,13 +13,51 @@ import java.util.ArrayList;
 public class Osobnik {
 
 
-    private double[] intervals;
+    private long[] cechy;
     private double[] rozklady;
+    private int iloscCech;
     private double wynik;
 
     public Osobnik(int iloscCech) {
-        intervals = new double[iloscCech];
-        rozklady  = new double[iloscCech];
+        this.iloscCech = iloscCech;
+        this.cechy = new long[this.iloscCech];
+        this.rozklady  = new double[this.iloscCech];
+    }
+
+    /**
+     * Konstruktor tworzący osobnika w zarodku, na podstawie rodzicow
+     * krzyżowanie
+     * @param matka rodzic
+     * @param ojciec rodzic
+     */
+    public Osobnik(Osobnik matka, Osobnik ojciec){
+        this.iloscCech = matka.iloscCech;
+        this.cechy = new long[this.iloscCech];
+        this.rozklady  = new double[this.iloscCech];
+
+        for(int i = 0 ; i < iloscCech; ++i){
+            cechy[i] = (matka.cechy[i] + ojciec.cechy[i]) / 2;
+            rozklady[i] = (matka.cechy[i] + ojciec.cechy[i]) / 2;
+        }
+    }
+
+    /**
+     * mutuje osobnika
+      * @param tau wyliczone na podstawie wielkości populacji
+     * @param tau2 wyliczone na podstawie wielkości populacji
+     * @param generator generator losujący cechy dla danej populacji
+     */
+    public void mutuj(double tau, double tau2, Random generator){
+        double xi = generator.nextGaussian();
+        for(double rozklad : rozklady){
+            rozklad *= Math.exp(xi * tau2 + tau * generator.nextGaussian());
+
+        }
+
+        for(int i = 0; i < iloscCech; ++i){
+            cechy[i] += generator.nextGaussian() * rozklady[i];
+        }
+
     }
 
     public double[] getRozklady() {
@@ -29,12 +68,12 @@ public class Osobnik {
         this.rozklady = rozklady;
     }
 
-    public double[] getIntervals() {
-        return intervals;
+    public long[] getCechy() {
+        return cechy;
     }
 
-    public void setIntervals(double[] intervals) {
-        this.intervals = intervals;
+    public void setCechy(long[] cechy) {
+        this.cechy = cechy;
     }
 
     public double getWynik() {
