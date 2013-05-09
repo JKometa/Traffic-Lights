@@ -51,6 +51,11 @@ public class Car extends ModelLimitObject implements Cloneable {
     private Crossroad crossroad;
 
 
+    /**
+     * czas jaki samochód spędził stojąc w korku lub czekając na światło
+     */
+    private long timeInTraffic;
+
 
     public Car(double x, double y, boolean horizontal, boolean ascending){
         super(x,y);
@@ -59,6 +64,7 @@ public class Car extends ModelLimitObject implements Cloneable {
 //        System.out.println(this.horizontal);
         this.ascending = ascending;
         this.crossroad = null;
+        this.timeInTraffic = 0;
     }
 
 
@@ -94,6 +100,7 @@ public class Car extends ModelLimitObject implements Cloneable {
             clone.horizontal = this.horizontal;
             clone.speed = this.speed;
             clone.crossroad = this.crossroad;
+            clone.timeInTraffic = this.timeInTraffic;
             return clone;
         } catch (CloneNotSupportedException e) {
             return null;
@@ -132,7 +139,18 @@ public class Car extends ModelLimitObject implements Cloneable {
         this.crossroad = crossroad;
     }
 
+    public long getTimeInTraffic() {
+        return timeInTraffic;
+    }
 
+    public void updateTimeInTraffic(long deltaTime){
+        timeInTraffic += deltaTime;
+    }
+
+    /**
+     * przesuwa samochód w kierunku w którym się porusza
+     * @param deltaS różnica przemieszczenia
+     */
     public void move(double deltaS){
         if(!ascending)
             deltaS = - deltaS;
@@ -144,6 +162,7 @@ public class Car extends ModelLimitObject implements Cloneable {
 
 
     }
+
 
 
 

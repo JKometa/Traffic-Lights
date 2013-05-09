@@ -65,12 +65,28 @@ public class Model implements Cloneable {
     /**
      * współrzędne y linie poziomych
      */
-    int[] horizontalLines;
+    private int[] horizontalLines;
 
     /**
      * współrzędne x linii pionowych
      */
-    int[] verticalLines;
+    private int[] verticalLines;
+
+    /**
+     * liczba samochodów który opuściły plansze
+     */
+    private int carLeft;
+
+    /**
+     * średni czas przebywania w korku przez samochody
+     */
+    private double averageTimeInTraffic;
+
+    /**
+     * ilosc skrzyzowan na planszy
+     */
+    private int numberOfCrossroads;
+
 
     /**
      * generuje model z odpowiednia ilością dróg
@@ -128,6 +144,7 @@ public class Model implements Cloneable {
             cars.add(spawn.spawn());
         }
 
+        numberOfCrossroads = crossroads.size();
 //        cars.add(spawnPoints.get(2).spawn() );
     }
 
@@ -135,6 +152,12 @@ public class Model implements Cloneable {
     public Object clone() throws CloneNotSupportedException {
         try {
             Model clone = (Model)super.clone();
+
+            clone.carLeft = this.carLeft;
+            clone.timeToNextCarSpawn = this.timeToNextCarSpawn;
+            clone.averageTimeInTraffic = this.averageTimeInTraffic;
+            clone.verticalLines = this.verticalLines.clone();
+            clone.horizontalLines = this.horizontalLines.clone();
 
             clone.crossroads = new ArrayList<Crossroad>();
             for(Crossroad cross : this.crossroads ){
@@ -149,6 +172,16 @@ public class Model implements Cloneable {
             clone.spawnPoints = new ArrayList<SpawnPoint>();
             for(SpawnPoint spawn : this.spawnPoints){
                 clone.spawnPoints.add((SpawnPoint)spawn.clone());
+            }
+
+            for(Car car : clone.cars){
+                for(Crossroad crossroad : clone.crossroads){
+                    Rectangle carBox = car.getBounds();
+                    Rectangle crossroadBox = crossroad.getBounds();
+                    if(crossroadBox.intersects(carBox) || crossroadBox.contains(carBox)){
+                        car.setCrossroad(crossroad);
+                    }
+                }
             }
 
             return clone;
@@ -183,6 +216,29 @@ public class Model implements Cloneable {
 
     public int[] getVerticalLines() {
         return verticalLines;
+    }
+
+    public double getAverageTimeInTraffic() {
+        return averageTimeInTraffic;
+    }
+
+    public int getCarLeft() {
+        return carLeft;
+    }
+
+    public int getNumberOfCrossroads() {
+        return numberOfCrossroads;
+    }
+
+    public void setIntervalsOnCrossroads(long[] intervals){
+        for (int i = 0; i < numberOfCrossroads; ++i ){
+            crossroads.get(i).setIntervalRedGreen(intervals[i]);
+        }
+    }
+
+    public void updateAverageTimeInTraffic(long timeInTraffic){
+        averageTimeInTraffic = ((averageTimeInTraffic * carLeft) + timeInTraffic) / (carLeft + 1);
+        ++carLeft;
     }
 
     /**

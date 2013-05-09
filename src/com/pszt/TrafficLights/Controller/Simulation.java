@@ -78,6 +78,7 @@ public class Simulation {
                             car.setSpeed(crossroad.getSpeedLimit());
                         } else{
                             car.move(-deltaS);
+                            car.updateTimeInTraffic(deltaTime);
                             carHitBox = car.getHitBox();
                         }
                         break;
@@ -89,6 +90,7 @@ public class Simulation {
             for(Car collisionCar : model.getCars()){
                 if(car != collisionCar && carHitBox.intersects(collisionCar.getHitBox())){
                     car.move(-deltaS);
+                    car.updateTimeInTraffic(deltaTime);
                     break;
                 }
             }
@@ -103,6 +105,8 @@ public class Simulation {
 //        usuwa samochody które wyjechały za plansze
         ArrayList< Car > cars = model.getCars();
         for (Car carToDelete : carsToDelete){
+             model.updateAverageTimeInTraffic(carToDelete.getTimeInTraffic());
+            System.out.println(model.getAverageTimeInTraffic());
              cars.remove(carToDelete);
         }
 
