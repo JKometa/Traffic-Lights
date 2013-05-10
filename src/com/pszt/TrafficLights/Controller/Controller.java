@@ -24,7 +24,7 @@ public class Controller implements  Runnable{
 
     private Simulation simulation;
     private Thread thread;
-    final private int DELAY_FRAME = 100;
+    final private int DELAY_FRAME = 300;
 
     private Populacja populacja;
 
@@ -69,7 +69,7 @@ public class Controller implements  Runnable{
             if(pokolenie < populacja.getIloscPokolen()){
                 model.setIntervalsOnCrossroads(populacja.getNajlepszeOkresy());
                 pokolenie = populacja.getIloscPokolen();
-                System.out.println("ustawiam swiatla wg nowego pokolenia! " + pokolenie);
+//                System.out.println("ustawiam swiatla wg nowego pokolenia! " + pokolenie);
             }
 
 

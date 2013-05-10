@@ -72,10 +72,12 @@ public class Crossroad extends ModelLimitObject implements Cloneable {
         super(x, y);
         this.ascendingHorizontal = ascendingHorizontal;
         this.ascendingVertical = ascendingVertical;
-        this.intervalRedGreen = 3000;
+        this.intervalRedGreen = 2000;
+        this.stateRedGreen = true;
         this.trafficLightHorizontal = new TrafficLight(TrafficLight.LightColor.GREEN);
         this.trafficLightVertical = new TrafficLight(TrafficLight.LightColor.RED);
         this.timeToChangeLight = this.intervalRedGreen;
+//        System.out.println("Nastepna swiatla za: " + timeToChangeLight);
     }
 
     @Override
@@ -88,6 +90,7 @@ public class Crossroad extends ModelLimitObject implements Cloneable {
             clone.ascendingVertical = this.ascendingVertical;
             clone.ascendingHorizontal = this.ascendingHorizontal;
             clone.timeToChangeLight = this.timeToChangeLight;
+            clone.intervalRedGreen = this.intervalRedGreen;
              return clone;
 
         } catch (CloneNotSupportedException e) {
@@ -103,6 +106,8 @@ public class Crossroad extends ModelLimitObject implements Cloneable {
         trafficLightHorizontal.nextColor();
         trafficLightVertical.nextColor();
         stateRedGreen = !stateRedGreen;
+
+//        System.out.println("Nastepna swiatla za: " + intervalRedGreen);
         return (stateRedGreen ? intervalRedGreen : intervalYellow);
 
     }
@@ -140,16 +145,13 @@ public class Crossroad extends ModelLimitObject implements Cloneable {
     @Override
     public Rectangle getHitBox() {
         return getBounds();
-//        return new Rectangle((int)(x - Model.ROAD_WIDTH / 2 - Car.MARGIN),
-//                (int)( y - Model.ROAD_WIDTH / 2 - Car.MARGIN),
-//                Model.ROAD_WIDTH + 2 * Car.MARGIN,
-//                Model.ROAD_WIDTH + 2 * Car.MARGIN);
     }
 
     public void updateLight(long deltaTime){
         timeToChangeLight -= deltaTime;
         if(timeToChangeLight <= 0){
             timeToChangeLight += nextLight();
+//            System.out.println("Nastepna swiatla za: " + timeToChangeLight);
         }
     }
 

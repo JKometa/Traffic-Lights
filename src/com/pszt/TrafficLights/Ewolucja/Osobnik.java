@@ -56,7 +56,11 @@ public class Osobnik {
 
         for(int i = 0; i < iloscCech; ++i){
             cechy[i] += generator.nextGaussian() * rozklady[i];
+            if(cechy[i] < 300)
+                cechy[i] = 300;
         }
+
+
 
     }
 

@@ -25,12 +25,12 @@ public class Populacja implements  Runnable {
     /**
      * minimalna wartość przy losowaniu rodzicow
      */
-    private final long MIN_LOSUJ = 100;
+     final long MIN_LOSUJ = 300;
 
     /**
      * maksymalna wartość przy losowaniu rodziców
      */
-    private final long MAX_LOSUJ = 5000;
+     final long MAX_LOSUJ = 5000;
 
     /**
      * generator do losowania licz i rozkładu
@@ -102,6 +102,8 @@ public class Populacja implements  Runnable {
             for (int j = 0; j < iloscCech; ++j){
                 cechyNowegoRodzica[j] = losuj();
                 rozkladyNowegoOsobnika[j] = generator.nextGaussian();
+//                System.out.println("rozklad: " + rozkladyNowegoOsobnika[j]);
+
 
             }
 
@@ -256,11 +258,15 @@ public class Populacja implements  Runnable {
     }
 
     private long losuj(){
-        return losuj(MIN_LOSUJ, MAX_LOSUJ);
+        long los =  losuj(MIN_LOSUJ, MAX_LOSUJ);
+//        System.out.println("wylosowano: " + los);
+
+        return los;
     }
 
     private long losuj(long min, long max){
         long los =  (Math.abs(generator.nextLong())) % (max - min) + min;
+//        System.out.println("wylosowano: " + los);
         return los;
     }
 }
