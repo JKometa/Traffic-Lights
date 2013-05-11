@@ -9,6 +9,7 @@ import com.pszt.TrafficLights.view.Widok;
 import java.awt.*;
 import java.util.ArrayList;
 import com.pszt.TrafficLights.Ewolucja.Populacja;
+import com.pszt.TrafficLights.view.WidokMain;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,7 +21,8 @@ import com.pszt.TrafficLights.Ewolucja.Populacja;
 public class Controller implements  Runnable{
     private Model model;
     private Model copyModel;
-    private Widok view;
+   // private Widok view;
+    private WidokMain widokMain;
 
     private Simulation simulation;
     private Thread thread;
@@ -33,9 +35,9 @@ public class Controller implements  Runnable{
      */
     private int pokolenie;
 
-    public Controller(Widok w) {
-        this.view = w;
+    public Controller(WidokMain vidokMain) {
 
+        this.widokMain = vidokMain;
 
 
     }
@@ -102,7 +104,7 @@ public class Controller implements  Runnable{
 //            }
 
 
-            view.maziaj(carsTmp, crossroadsTmp);
+            widokMain.getWidok().maziaj(carsTmp, crossroadsTmp);
 
             beforeTime = System.currentTimeMillis();
         }
@@ -118,14 +120,29 @@ public class Controller implements  Runnable{
 
     }
 
+    /** Wyswietla okno symulacji i inicjuje ja
+     *
+     */
+    public void display(int h, int v){
+        generateModel(h,v);
+        widokMain.showSimulation();
+        this.start();
+    }
+
+    public void stopSimulation(){
+           thread.stop();
+
+    }
+
+
     public Model getCopyModel() {
         return copyModel;
     }
 
     public void setModel(Model model) {
         this.model = model;
-        view.setHorizonalLines(model.getHorizontalLines());
-        view.setVerticalLines(model.getVerticalLines());
+        widokMain.setHorizonalLines(model.getHorizontalLines());
+        widokMain.setVerticalLines(model.getVerticalLines());
 
         try {
             copyModel = (Model)model.clone();
@@ -136,6 +153,10 @@ public class Controller implements  Runnable{
         this.populacja = new Populacja(this);
         this.simulation = new Simulation(model);
     }
+    public void generateModel(int h, int v){
+         Model m = new Model(h,v);
+        this.setModel(m);
 
+    }
 
 }

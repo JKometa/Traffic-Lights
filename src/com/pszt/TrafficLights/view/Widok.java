@@ -1,5 +1,6 @@
 package com.pszt.TrafficLights.view;
 
+import com.pszt.TrafficLights.Controller.Controller;
 import com.pszt.TrafficLights.model.*;
 
 import javax.swing.*;
@@ -15,7 +16,8 @@ import java.util.ArrayList;
  */
 public class Widok extends JPanel {
 
-
+    private static final int LIGHT_WIDTH = 10;
+    private static final int ZNAK_WIDTH = 30;
     public ArrayList<Car> cars;
 
     public ArrayList<Crossroad> crossroads;
@@ -25,21 +27,22 @@ public class Widok extends JPanel {
     private int[] horizontal;
     private int[] vertical;
     private ImageIcon lewo, prawo, gora, dol, limit;
-    boolean modelPoprawiony = false;
+
+    Controller controller;
 
 
-    public Widok(Model m) {
+    public Widok(Controller controller) {
+        this.controller = controller;
+        cars = new ArrayList<Car>();
+        crossroads = new ArrayList<Crossroad>();
         setBackground(Color.BLACK);
         setDoubleBuffered(true);
 
-        crossroads = m.getCrossroads();
-        spawnPoints = m.getSpawnPoints();
-        cars = m.getCars();
         lewo = new ImageIcon(this.getClass().getResource("carLewo.png"));
         prawo = new ImageIcon(this.getClass().getResource("carPrawo.png"));
         gora = new ImageIcon(this.getClass().getResource("carGora.png"));
         dol = new ImageIcon(this.getClass().getResource("carDol.png"));
-        limit  =                 new ImageIcon(this.getClass().getResource("limit.png"));
+        limit  = new ImageIcon(this.getClass().getResource("limit.png"));
 
 
 
@@ -63,31 +66,35 @@ public class Widok extends JPanel {
 
         for (Crossroad tmp : crossroads) {
 
-            Point cords = tmp.getPosition();
+            //Point cords = tmp.getPosition();
+            Point cords = new Point(tmp.getBounds().x, tmp.getBounds().y);
+          //  cords.x =
             g2d.setColor(Color.blue);
+             g2d.draw(tmp.getBounds());
+           // g2d.drawRect(cords.x -20, cords.y-20, 40, 40);
+            Point hPoint, vPoint, limitPoint, textPoint, middle;
 
-            g2d.drawRect(cords.x -20, cords.y-20, 40, 40);
-            Point hPoint, vPoint, limitPoint, textPoint;
             hPoint = (Point)cords.clone();
             vPoint = (Point)cords.clone();
             limitPoint = (Point)cords.clone();
             textPoint  = (Point)cords.clone();
+
             TrafficLight.LightColor light = tmp.getTrafficLightHorizontal().getColor();
             if(tmp.isAscendingHorizontal()){
-               hPoint.x -= 25;
-               hPoint.y += 15;
-               limitPoint.x += 25;
-               limitPoint.y += 25;
-               textPoint.x += 35;
-               textPoint.y += 45;
+               hPoint.x -= Widok.LIGHT_WIDTH/2;
+               hPoint.y += Model.ROAD_WIDTH - Widok.LIGHT_WIDTH/2;
+               limitPoint.x += Model.ROAD_WIDTH + 10;
+               limitPoint.y += Model.ROAD_WIDTH + 10;
+               textPoint.x += Model.ROAD_WIDTH + 10 + Widok.ZNAK_WIDTH/2 - 5;
+               textPoint.y += Model.ROAD_WIDTH + 10 + Widok.ZNAK_WIDTH/2 + 5;
 
             }else{
-                hPoint.x += 15;
-                hPoint.y -= 25;
-                limitPoint.x -= 50;
-                limitPoint.y -= 50;
-                textPoint.x -= 40;
-                textPoint.y -= 30;
+                hPoint.x += Model.ROAD_WIDTH - Widok.LIGHT_WIDTH/2;
+                hPoint.y -= Widok.LIGHT_WIDTH/2;
+                limitPoint.x -= Widok.ZNAK_WIDTH + 10;
+                limitPoint.y -= Widok.ZNAK_WIDTH + 10;
+                textPoint.x -= Widok.ZNAK_WIDTH + 10 - Widok.ZNAK_WIDTH/2 + 5;
+                textPoint.y -= Widok.ZNAK_WIDTH - Widok.ZNAK_WIDTH/2 + 5;
 
             }
             g2d.drawImage(limit.getImage(), limitPoint.x, limitPoint.y, 30, 30, this);
@@ -96,19 +103,19 @@ public class Widok extends JPanel {
             limitPoint = (Point)cords.clone();
             textPoint  = (Point)cords.clone();
             if(tmp.isAscendingVertical()){
-                vPoint.x -= 25;
-                vPoint.y -= 25;
-                limitPoint.x -= 50;
-                limitPoint.y += 25;
+                vPoint.x -= Widok.LIGHT_WIDTH/2;
+                vPoint.y -= Widok.LIGHT_WIDTH/2;
+                limitPoint.x -= Widok.ZNAK_WIDTH + 10;
+                limitPoint.y += Model.ROAD_WIDTH + 10;
                 textPoint.x -= 40;
                 textPoint.y += 45;
 
 
             }else{
-                vPoint.x += 15;
-                vPoint.y += 15;
-                limitPoint.x += 25;
-                limitPoint.y -= 50;
+                vPoint.x += Model.ROAD_WIDTH - Widok.LIGHT_WIDTH/2;
+                vPoint.y += Model.ROAD_WIDTH - Widok.LIGHT_WIDTH/2;
+                limitPoint.x += Model.ROAD_WIDTH + 10;
+                limitPoint.y -= Widok.ZNAK_WIDTH + 10;
                 textPoint.x += 35;
                 textPoint.y -= 30;
 
@@ -154,15 +161,6 @@ public class Widok extends JPanel {
         repaint();
     }
 
-    public void setHorizonalLines(int[] lines) {
-        horizontal = lines;
-
-    }
-
-    public void setVerticalLines(int[] lines) {
-        vertical = lines;
-
-    }
 
     private void drawLight(Graphics2D g2d, TrafficLight.LightColor light, Point p){
 
@@ -173,6 +171,13 @@ public class Widok extends JPanel {
         else
             g2d.setColor(Color.yellow);
         g2d.fillRect(p.x, p.y, 10, 10);
+    }
+
+    public void setLines(int[] hLines, int[] vLines){
+
+        horizontal = hLines;
+        vertical = vLines;
+
     }
 
 }
