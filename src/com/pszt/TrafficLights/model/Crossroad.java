@@ -2,7 +2,6 @@ package com.pszt.TrafficLights.model;
 
 
 import java.awt.*;
-import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -49,9 +48,14 @@ public class Crossroad extends ModelLimitObject implements Cloneable {
     private boolean ascendingVertical;
 
     /**
-     * czas w jakim skrzyżowania sa w stanie zielonym/czerwonym
+     * czas w jakim poziome światła sa zielone
      */
-    private long intervalRedGreen;
+    private long intervalHorizontalGreen;
+
+    /**
+     * czas w jakim poziome światła sa czerwone
+     */
+    private long intervalHorizontalRed;
 
 
     /**
@@ -72,11 +76,12 @@ public class Crossroad extends ModelLimitObject implements Cloneable {
         super(x, y);
         this.ascendingHorizontal = ascendingHorizontal;
         this.ascendingVertical = ascendingVertical;
-        this.intervalRedGreen = 2000;
+        this.intervalHorizontalGreen = 2000;
+        this.intervalHorizontalRed = 6000;
         this.stateRedGreen = true;
         this.trafficLightHorizontal = new TrafficLight(TrafficLight.LightColor.GREEN);
         this.trafficLightVertical = new TrafficLight(TrafficLight.LightColor.RED);
-        this.timeToChangeLight = this.intervalRedGreen;
+        this.timeToChangeLight = this.intervalHorizontalGreen;
 //        System.out.println("Nastepna swiatla za: " + timeToChangeLight);
     }
 
@@ -90,7 +95,8 @@ public class Crossroad extends ModelLimitObject implements Cloneable {
             clone.ascendingVertical = this.ascendingVertical;
             clone.ascendingHorizontal = this.ascendingHorizontal;
             clone.timeToChangeLight = this.timeToChangeLight;
-            clone.intervalRedGreen = this.intervalRedGreen;
+            clone.intervalHorizontalGreen = this.intervalHorizontalGreen;
+            clone.intervalHorizontalRed = this.intervalHorizontalRed;
              return clone;
 
         } catch (CloneNotSupportedException e) {
@@ -107,17 +113,34 @@ public class Crossroad extends ModelLimitObject implements Cloneable {
         trafficLightVertical.nextColor();
         stateRedGreen = !stateRedGreen;
 
-//        System.out.println("Nastepna swiatla za: " + intervalRedGreen);
-        return (stateRedGreen ? intervalRedGreen : intervalYellow);
+     //   long nextTime;
+
+        switch (trafficLightHorizontal.getColor()) {
+            case RED_YELLOW:
+            case YELLOW:
+                return intervalYellow;
+            case RED:
+                return intervalHorizontalRed;
+            case GREEN:
+                return intervalHorizontalGreen;
+        }
+
+//        System.out.println("Nastepna swiatla za: " + intervalHorizontalGreen);
+//        return (stateRedGreen ? intervalHorizontalGreen : intervalYellow);
+        return -1;
 
     }
 
-    public long getIntervalRedGreen() {
-        return intervalRedGreen;
+    public long getIntervalHorizontalGreen() {
+        return intervalHorizontalGreen;
     }
 
-    public void setIntervalRedGreen(long intervalRedGreen) {
-        this.intervalRedGreen = intervalRedGreen;
+    public void setIntervalHorizontalGreen(long intervalHorizontalGreen) {
+        this.intervalHorizontalGreen = intervalHorizontalGreen;
+    }
+
+    public void setIntervalHorizontalRed(long intervalHorizontalRed) {
+        this.intervalHorizontalRed = intervalHorizontalRed;
     }
 
     public boolean isAscendingVertical() {

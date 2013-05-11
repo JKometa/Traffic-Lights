@@ -58,6 +58,8 @@ public class Osobnik {
             cechy[i] += generator.nextGaussian() * rozklady[i];
             if(cechy[i] < 300)
                 cechy[i] = 300;
+
+//            System.out.println("Cecha " + cechy[i]);
         }
 
 

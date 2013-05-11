@@ -71,6 +71,13 @@ public class Controller implements  Runnable{
             if(pokolenie < populacja.getIloscPokolen()){
                 model.setIntervalsOnCrossroads(populacja.getNajlepszeOkresy());
                 pokolenie = populacja.getIloscPokolen();
+
+//                for(long x : populacja.getNajlepszeOkresy()){
+//                    System.out.println("Dobre okresy: " + x);
+//                }
+
+
+
 //                System.out.println("ustawiam swiatla wg nowego pokolenia! " + pokolenie);
             }
 

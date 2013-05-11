@@ -79,7 +79,7 @@ public class Populacja implements  Runnable {
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        this.iloscCech = model.getNumberOfCrossroads();
+        this.iloscCech = model.getNumberOfCrossroads() * 2;
         tau = 1 / (Math.sqrt(2 * Math.sqrt(iloscOsobnikow)));
         tau2 = 1 / (Math.sqrt(2 * iloscOsobnikow));
         generator = new Random();
@@ -205,8 +205,15 @@ public class Populacja implements  Runnable {
         Collections.sort(tmp, komparator);
         osobnicy.clear();
 
+
+
+        System.out.println("-----------------------------------------------------------");
         for (int i = 0; i < iloscOsobnikow; ++i){
             osobnicy.add(tmp.get(i));
+        }
+
+        for(Osobnik x : osobnicy){
+            System.out.println("Wynik: " + x.getWynik());
         }
 
     }
@@ -216,6 +223,7 @@ public class Populacja implements  Runnable {
      * @return tablice okresów od najlepszego osobnika
      */
     public long[] getNajlepszeOkresy(){
+
         return osobnicy.get(0).getCechy();
     }
 
@@ -241,6 +249,7 @@ public class Populacja implements  Runnable {
 
             try {
                 model = (Model)controller.getCopyModel().clone();
+                ocenOsobnikow(osobnicy);
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
             }

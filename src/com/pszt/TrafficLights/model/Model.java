@@ -236,7 +236,8 @@ public class Model implements Cloneable {
 
     public void setIntervalsOnCrossroads(long[] intervals){
         for (int i = 0; i < numberOfCrossroads; ++i ){
-            crossroads.get(i).setIntervalRedGreen(intervals[i]);
+            crossroads.get(i).setIntervalHorizontalGreen(intervals[i * 2]);
+            crossroads.get(i).setIntervalHorizontalRed(intervals[i * 2 + 1]);
         }
     }
 
