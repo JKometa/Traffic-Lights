@@ -55,12 +55,12 @@ public class Model implements Cloneable {
     /**
      * górny przedział czasu na respawn samochodu
      */
-    final static private int MAX_SPAWN_TIME = 3000;
+    final static private int MAX_SPAWN_TIME = 6000;
 
     /**
      * dolny przedział czasu na respawn samochodu
      */
-    final static private int MIN_SPAWN_TIME = 1000;
+    final static private int MIN_SPAWN_TIME = 4000;
 
     /**
      * współrzędne y linie poziomych
@@ -101,6 +101,22 @@ public class Model implements Cloneable {
         crossroads = new ArrayList<Crossroad>();
         spawnPoints = new ArrayList<SpawnPoint>();
 
+
+        /*
+        tu namaziac  konstruktora
+
+        zmieniac tylko te zmienne i tablice
+
+            to zakomentowac:
+        numberOfHorizontalRoads = 2;
+        numberOfVerticalRoads = 2;
+
+        w te tablice wstawic wylosowane linie i wsio tutaj
+
+        int[] horizontal = {250, 444};
+        int[] vertical = {200, 366};
+
+         */
         numberOfHorizontalRoads = 2;
         numberOfVerticalRoads = 2;
 
