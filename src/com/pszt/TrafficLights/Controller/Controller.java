@@ -21,6 +21,9 @@ import com.pszt.TrafficLights.view.WidokMain;
 public class Controller implements  Runnable{
     private Model model;
     private Model copyModel;
+
+    private Model modelBezEwolucji;
+    private Simulation simulationBezEwolucji;
    // private Widok view;
     private WidokMain widokMain;
 
@@ -30,10 +33,7 @@ public class Controller implements  Runnable{
 
     final private int DELAY_FRAME = 300;
 
-    /**
-     * true jesli podpinamy ewolucje
-     */
-    boolean zEwolucja;
+
 
     private Populacja populacja;
 
@@ -43,10 +43,7 @@ public class Controller implements  Runnable{
     private int pokolenie;
 
     public Controller(WidokMain vidokMain) {
-        zEwolucja = true;
         this.widokMain = vidokMain;
-
-
     }
 
     @Override
@@ -67,8 +64,9 @@ public class Controller implements  Runnable{
                         System.out.println("interrupted");
                     }
             }
-            if (zEwolucja){
+
                 simulation.update((sleep > 0 ? DELAY_FRAME : timeDiff ));
+                simulationBezEwolucji.update((sleep > 0 ? DELAY_FRAME : timeDiff ));
                 try {
                     copyModel = (Model)model.clone();
                 } catch (CloneNotSupportedException e) {
@@ -87,7 +85,7 @@ public class Controller implements  Runnable{
 
     //                System.out.println("ustawiam swiatla wg nowego pokolenia! " + pokolenie);
                 }
-            }
+
 
 
             ArrayList<Car> carsTmp = new ArrayList<Car>();
@@ -131,9 +129,7 @@ public class Controller implements  Runnable{
     public void start(){
         thread = new Thread(this);
         thread.start();
-
-        if(zEwolucja)
-            populacja.start();
+        populacja.start();
 
     }
 
@@ -167,10 +163,17 @@ public class Controller implements  Runnable{
             e.printStackTrace();
         }
 
-        if(zEwolucja)
+
             this.populacja = new Populacja(this, wyborPopulacji);
 
+        try {
+            modelBezEwolucji = (Model)model.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
         this.simulation = new Simulation(model);
+        this.simulationBezEwolucji = new Simulation(modelBezEwolucji);
     }
     public void generateModel(int h, int v){
          Model m = new Model(h,v);
@@ -179,9 +182,6 @@ public class Controller implements  Runnable{
     }
 
 
-    public void setzEwolucja(boolean zEwolucja) {
-        this.zEwolucja = zEwolucja;
-    }
 
     public void setWyborPopulacji(Populacja.Wybor wyborPopulacji) {
         this.wyborPopulacji = wyborPopulacji;
