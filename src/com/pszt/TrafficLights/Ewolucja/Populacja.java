@@ -69,6 +69,11 @@ public class Populacja implements  Runnable {
      */
     private int iloscCech;
 
+    /**
+     * najlepszy osobnik w pokoleniu
+     */
+    private Osobnik najlepszy;
+
     private double tau;
     private double tau2;
 
@@ -212,6 +217,8 @@ public class Populacja implements  Runnable {
             osobnicy.add(tmp.get(i));
         }
 
+        najlepszy = osobnicy.get(0);
+
         for(Osobnik x : osobnicy){
             System.out.println("Wynik: " + x.getWynik());
         }
@@ -224,7 +231,7 @@ public class Populacja implements  Runnable {
      */
     public long[] getNajlepszeOkresy(){
 
-        return osobnicy.get(0).getCechy();
+        return najlepszy.getCechy();
     }
 
     public int getIloscPokolen() {

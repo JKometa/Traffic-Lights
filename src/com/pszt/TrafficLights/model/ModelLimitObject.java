@@ -31,7 +31,8 @@ abstract class ModelLimitObject extends ModelObject implements Cloneable {
         super(x, y);
         Random rand = new Random();
         int randInt = rand.nextInt(5);
-        this.speedLimit = 0.02f + randInt * 0.005f;
+//        this.speedLimit = 0.02f + randInt * 0.005f;
+        this.speedLimit = 0.04f + randInt * 0.01f;
         idSpeed = randInt;
     }
 

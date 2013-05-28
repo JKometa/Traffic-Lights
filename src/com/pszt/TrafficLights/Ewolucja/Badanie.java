@@ -38,7 +38,7 @@ public class Badanie implements Runnable{
     /**
      * czas jaki będzie badany podczas symulacji
      */
-    final static private int CZAS_BADANIA = 10000;
+    final static private int CZAS_BADANIA = 20000;
 
     /**
      * mówi, czy wątek zakończył badanie i zmienna wynik jest prawdziwa
@@ -58,8 +58,12 @@ public class Badanie implements Runnable{
 
     @Override
     public void run() {
-//        int i;
-        for(int i = 0; i < CZAS_BADANIA / DELAY_FRAME; ++i){
+
+//        for(int i = 0; i < CZAS_BADANIA / DELAY_FRAME; ++i){
+//            simulation.update(DELAY_FRAME);
+//        }
+
+        while(model.getNumberOfCars() > 0){
             simulation.update(DELAY_FRAME);
         }
         wynik = model.getAverageTimeInTraffic();
