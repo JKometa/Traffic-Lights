@@ -18,6 +18,7 @@ public class Widok extends JPanel {
 
     private static final int LIGHT_WIDTH = 10;
     private static final int ZNAK_WIDTH = 30;
+    private boolean bezEwolucji = false;
     public ArrayList<Car> cars;
 
     public ArrayList<Crossroad> crossroads;
@@ -54,7 +55,7 @@ public class Widok extends JPanel {
 
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.DARK_GRAY);
-
+        g2d.drawString(String.valueOf(controller.getAverageTimeInTraffic()), 10, 10);
         for (int horizontalLine : horizontal) {
             g2d.fillRect(0, horizontalLine - Model.ROAD_WIDTH/2, Model.BOARD_WIDTH, Model.ROAD_WIDTH);
          //   g2d.drawLine(0, horizontalLine, 1000, horizontalLine);
@@ -107,8 +108,8 @@ public class Widok extends JPanel {
                 vPoint.y -= Widok.LIGHT_WIDTH/2;
                 limitPoint.x -= Widok.ZNAK_WIDTH + 10;
                 limitPoint.y += Model.ROAD_WIDTH + 10;
-                textPoint.x -= Widok.ZNAK_WIDTH - Widok.ZNAK_WIDTH/2 - 5;
-                textPoint.y += 45;
+                textPoint.x -= Widok.ZNAK_WIDTH - Widok.ZNAK_WIDTH/2 + 15;
+                textPoint.y += Model.ROAD_WIDTH + 10  + Widok.ZNAK_WIDTH/2 + 5;
 
 
             }else{
@@ -116,8 +117,8 @@ public class Widok extends JPanel {
                 vPoint.y += Model.ROAD_WIDTH - Widok.LIGHT_WIDTH/2;
                 limitPoint.x += Model.ROAD_WIDTH + 10;
                 limitPoint.y -= Widok.ZNAK_WIDTH + 10;
-                textPoint.x += 35;
-                textPoint.y -= 30;
+                textPoint.x += Model.ROAD_WIDTH + 10 + Widok.ZNAK_WIDTH/2 - 5;
+                textPoint.y -= Widok.ZNAK_WIDTH + 10;
 
             }
 
@@ -149,6 +150,11 @@ public class Widok extends JPanel {
                 g2d.drawImage(this.gora.getImage(), tmp.getBounds().x, tmp.getBounds().y, 10, 30, this);
         }
 
+        g2d.setColor(Color.WHITE);
+        if(bezEwolucji)
+            g2d.drawString(String.valueOf(controller.getAverageTimeInTrafficBezEwolucji()), 10, 10);
+        else
+            g2d.drawString(String.valueOf(controller.getAverageTimeInTraffic()), 10, 10);
         Toolkit.getDefaultToolkit().sync();
         g.dispose();
     }
@@ -158,6 +164,10 @@ public class Widok extends JPanel {
         cars = kary;
         crossroads = krosorldy;
        // spawnPoints = spalny;
+        repaint();
+    }
+
+    public void maziaj(){
         repaint();
     }
 
@@ -178,6 +188,14 @@ public class Widok extends JPanel {
         horizontal = hLines;
         vertical = vLines;
 
+    }
+    public void setData(ArrayList<Car> kary, ArrayList<Crossroad> krosorldy) {
+        cars = kary;
+        crossroads = krosorldy;
+    }
+
+    public void setEwolucja(boolean b){
+           this.bezEwolucji = b;
     }
 
 }
