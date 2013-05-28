@@ -7,6 +7,12 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="charts4j-1.3" level="project" />
+    <orderEntry type="library" name="junit-4.4" level="project" />
+    <orderEntry type="library" name="jfreechart-1.0.14" level="project" />
+    <orderEntry type="library" name="junit" level="project" />
+    <orderEntry type="library" name="swtgraphics2d" level="project" />
+    <orderEntry type="library" name="jcommon-1.0.17" level="project" />
   </component>
 </module>
 

@@ -5,6 +5,7 @@ import com.pszt.TrafficLights.model.Car;
 import com.pszt.TrafficLights.model.Model;
 import com.pszt.TrafficLights.view.Widok;
 import com.pszt.TrafficLights.view.WidokMain;
+import org.jfree.ui.RefineryUtilities;
 
 import javax.swing.*;
 import java.util.ArrayList;

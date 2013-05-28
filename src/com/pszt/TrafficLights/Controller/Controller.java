@@ -1,15 +1,15 @@
 package com.pszt.TrafficLights.Controller;
 
+import com.pszt.TrafficLights.view.Wykres;
 import com.pszt.TrafficLights.model.Car;
 import com.pszt.TrafficLights.model.Crossroad;
 import com.pszt.TrafficLights.model.Model;
 import com.pszt.TrafficLights.model.SpawnPoint;
-import com.pszt.TrafficLights.view.Widok;
 
-import java.awt.*;
 import java.util.ArrayList;
 import com.pszt.TrafficLights.Ewolucja.Populacja;
 import com.pszt.TrafficLights.view.WidokMain;
+import org.jfree.ui.RefineryUtilities;
 
 /**
  * Created with IntelliJ IDEA.
@@ -52,11 +52,22 @@ public class Controller implements  Runnable{
     public void run() {
 
         long beforeTime, timeDiff, sleep;
-
+        final Wykres demo = new Wykres("Wykres");
+        demo.setVisible(true);
         beforeTime = System.currentTimeMillis();
         widokMain.getWidokBezSymulancji().setData(modelBezEwolucji.getCars(), modelBezEwolucji.getCrossroads());
         widokMain.getWidokBezSymulancji().setEwolucja(true);
         while (true) {
+
+
+
+            demo.update(getAverageTimeInTrafficBezEwolucji(), getAverageTimeInTraffic());
+            demo.pack();
+
+                RefineryUtilities.centerFrameOnScreen(demo);
+
+
+
             timeDiff = System.currentTimeMillis() - beforeTime;
             sleep = DELAY_FRAME - timeDiff;
 
@@ -141,7 +152,7 @@ public class Controller implements  Runnable{
      *
      */
     public void display(int h, int v){
-        generateModel(h,v);
+        generateModel(h, v);
         widokMain.showSimulation();
         this.start();
     }

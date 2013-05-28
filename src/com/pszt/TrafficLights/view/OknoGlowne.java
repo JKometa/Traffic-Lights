@@ -79,11 +79,7 @@ public class OknoGlowne {
         rududududu = new Button("Rududu");
 
         frame.setLayout(experimentLayout);
-        panelHolder[0][0].add(new JLabel("Ilość w poziomie:"));
-        panelHolder[0][1].add(hCount);
-        panelHolder[1][0].add(new JLabel("Ilość w pionie:"));
-        panelHolder[1][1].add(vCount);
-        panelHolder[2][0].add(new JLabel("Coś nie wiem co:"));
+        panelHolder[2][0].add(new JLabel("Wybór potomków:"));
         panelHolder[2][1].add(populacje);
         panelHolder[3][0].add(rududududu);
 

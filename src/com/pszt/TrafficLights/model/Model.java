@@ -80,7 +80,7 @@ public class Model implements Cloneable {
     /**
      * średni czas przebywania w korku przez samochody
      */
-    private double averageTimeInTraffic;
+    private double averageTimeInTraffic= 1000;
 
     /**
      * ilosc skrzyzowan na planszy
@@ -159,6 +159,7 @@ public class Model implements Cloneable {
             clone.averageTimeInTraffic = 0; //this.averageTimeInTraffic;
             clone.verticalLines = this.verticalLines.clone();
             clone.horizontalLines = this.horizontalLines.clone();
+            clone.averageTimeInTraffic = this.averageTimeInTraffic;
 
             clone.crossroads = new ArrayList<Crossroad>();
             for(Crossroad cross : this.crossroads ){
