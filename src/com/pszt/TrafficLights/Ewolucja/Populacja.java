@@ -236,6 +236,40 @@ public class Populacja implements  Runnable {
      * wybiera następne pokolenie rodziców z rodziców + potomkowie wg metody ruletki -> patrz skrypt
      */
     public void wybierzRuletka(){
+        ArrayList< Osobnik > tmp = new ArrayList<Osobnik>();
+
+        for (Osobnik rodzic : osobnicy){
+            tmp.add(rodzic);
+        }
+
+        for (Osobnik potomek : zarodki){
+            tmp.add(potomek);
+        }
+
+        ArrayList< Osobnik > tablicaLosujaca = new ArrayList<Osobnik>();
+
+        for (Osobnik osobnik : tmp){
+            int priorytet = 10 - ((int)osobnik.getWynik() / 1000);
+            if (priorytet <= 0)
+                priorytet = 0;
+
+            for (int i = 0; i <= priorytet; ++i){
+                tablicaLosujaca.add(osobnik);
+            }
+
+        }
+        osobnicy.clear();
+        while(osobnicy.size() != iloscOsobnikow){
+            int losuj = new Random().nextInt(tablicaLosujaca.size())  ;
+            Osobnik wylosowany =  tablicaLosujaca.get(losuj);
+            osobnicy.add(wylosowany);
+            while(tablicaLosujaca.remove(wylosowany)) ;
+        }
+
+        KomparatorOsobnikow komparator = new KomparatorOsobnikow();
+        Collections.sort(osobnicy, komparator);
+
+       najlepszy = osobnicy.get(0);
 
     }
 
