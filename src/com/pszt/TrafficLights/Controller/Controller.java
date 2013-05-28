@@ -27,6 +27,7 @@ public class Controller implements  Runnable{
    // private Widok view;
     private WidokMain widokMain;
 
+
     private Simulation simulation;
     private Thread thread;
     Populacja.Wybor wyborPopulacji;
@@ -44,6 +45,7 @@ public class Controller implements  Runnable{
 
     public Controller(WidokMain vidokMain) {
         this.widokMain = vidokMain;
+
     }
 
     @Override
@@ -52,7 +54,8 @@ public class Controller implements  Runnable{
         long beforeTime, timeDiff, sleep;
 
         beforeTime = System.currentTimeMillis();
-
+        widokMain.getWidokBezSymulancji().setData(modelBezEwolucji.getCars(), modelBezEwolucji.getCrossroads());
+        widokMain.getWidokBezSymulancji().setEwolucja(true);
         while (true) {
             timeDiff = System.currentTimeMillis() - beforeTime;
             sleep = DELAY_FRAME - timeDiff;
@@ -118,6 +121,7 @@ public class Controller implements  Runnable{
 
 
             widokMain.getWidok().maziaj(carsTmp, crossroadsTmp);
+            widokMain.getWidokBezSymulancji().maziaj();
 
             beforeTime = System.currentTimeMillis();
         }
@@ -176,11 +180,19 @@ public class Controller implements  Runnable{
         this.simulationBezEwolucji = new Simulation(modelBezEwolucji);
     }
     public void generateModel(int h, int v){
-         Model m = new Model(h,v);
+        Model m = new Model(h,v);
         this.setModel(m);
 
     }
 
+
+
+    public double getAverageTimeInTraffic() {
+        return model.getAverageTimeInTraffic();
+    }
+    public double getAverageTimeInTrafficBezEwolucji() {
+        return modelBezEwolucji.getAverageTimeInTraffic();
+    }
 
 
     public void setWyborPopulacji(Populacja.Wybor wyborPopulacji) {

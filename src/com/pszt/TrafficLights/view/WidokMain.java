@@ -19,7 +19,9 @@ import java.util.ArrayList;
  */
 public class WidokMain extends JFrame{
     Widok w;
+    Widok widokBezSymulancji;
     Controller controller;
+    JFrame bezEwolucji;
 
     private int[] horizontal;
     private int[] vertical;
@@ -38,6 +40,17 @@ public class WidokMain extends JFrame{
         w = new Widok(controller);
         w.setLines(horizontal, vertical);
         add(w);
+        bezEwolucji = new JFrame("Bez ewolucji");
+
+        widokBezSymulancji = new Widok(controller);
+        widokBezSymulancji.setLines(horizontal, vertical);
+        bezEwolucji.add(widokBezSymulancji);
+        bezEwolucji.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        bezEwolucji.setSize(Model.BOARD_WIDTH, Model.BOARD_HEIGHT);
+        bezEwolucji.setLocationRelativeTo(null);
+        bezEwolucji.setResizable(false);
+        bezEwolucji.setVisible(true);
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(Model.BOARD_WIDTH, Model.BOARD_HEIGHT);
         setLocationRelativeTo(null);
@@ -49,6 +62,10 @@ public class WidokMain extends JFrame{
 
     public Widok getWidok(){
          return w;
+
+    }
+    public Widok getWidokBezSymulancji(){
+        return widokBezSymulancji;
 
     }
 
