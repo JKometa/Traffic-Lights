@@ -59,6 +59,9 @@ public class Osobnik {
             if(cechy[i] < 300)
                 cechy[i] = 300;
 
+            if(cechy[i] > 5000)
+                cechy[i] = 5000;
+
 //            System.out.println("Cecha " + cechy[i]);
         }
 
