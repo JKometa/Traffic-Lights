@@ -107,7 +107,7 @@ public class Widok extends JPanel {
                 vPoint.y -= Widok.LIGHT_WIDTH/2;
                 limitPoint.x -= Widok.ZNAK_WIDTH + 10;
                 limitPoint.y += Model.ROAD_WIDTH + 10;
-                textPoint.x -= 40;
+                textPoint.x -= Widok.ZNAK_WIDTH - Widok.ZNAK_WIDTH/2 - 5;
                 textPoint.y += 45;
 
 

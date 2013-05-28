@@ -1,11 +1,14 @@
 package com.pszt.TrafficLights.view;
 
 import com.pszt.TrafficLights.Controller.Controller;
+import com.pszt.TrafficLights.Ewolucja.Populacja;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.beans.PropertyChangeListener;
 
 /**
@@ -52,8 +55,27 @@ public class OknoGlowne {
 
         hCount = new JSpinner();
         vCount = new JSpinner();
-        String[] opcje = {"Pierwsza", "Druga", "Trzecia"};
+        String[] opcje = {"Najlepszy", "Ranking", "Ruletka"};
         populacje = new JComboBox(opcje);
+
+
+        populacje.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                   int selected =  populacje.getSelectedIndex();
+                    Populacja.Wybor wynik;
+                   if(selected == 0){
+                       wynik = Populacja.Wybor.NAJLEPSZY;
+                   }else if(selected == 1){
+                       wynik = Populacja.Wybor.RANKING;
+
+                   }else
+                       wynik = Populacja.Wybor.RULETKA;
+                       controller.setWyborPopulacji(wynik);
+                }
+            }
+        });
         rududududu = new Button("Rududu");
 
         frame.setLayout(experimentLayout);

@@ -1,6 +1,7 @@
 package com.pszt.TrafficLights.view;
 
 import com.pszt.TrafficLights.Controller.Controller;
+import com.pszt.TrafficLights.Ewolucja.Populacja;
 import com.pszt.TrafficLights.model.Car;
 import com.pszt.TrafficLights.model.Crossroad;
 import com.pszt.TrafficLights.model.Model;
@@ -24,6 +25,7 @@ public class WidokMain extends JFrame{
     private int[] vertical;
     public void setController(Controller controller) {
         this.controller = controller;
+        controller.setWyborPopulacji(Populacja.Wybor.NAJLEPSZY);
 
     }
 
