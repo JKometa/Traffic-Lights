@@ -50,6 +50,8 @@ public class Badanie implements Runnable{
      */
     private double wynik;
 
+
+
     public Badanie(Model model) {
         this.model = model;
         simulation = new Simulation(model);
@@ -86,4 +88,6 @@ public class Badanie implements Runnable{
     public boolean isBadanieZakonczone() {
         return badanieZakonczone;
     }
+
+
 }

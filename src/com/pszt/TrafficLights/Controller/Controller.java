@@ -26,7 +26,14 @@ public class Controller implements  Runnable{
 
     private Simulation simulation;
     private Thread thread;
+    Populacja.Wybor wyborPopulacji;
+
     final private int DELAY_FRAME = 300;
+
+    /**
+     * true jesli podpinamy ewolucje
+     */
+    boolean zEwolucja;
 
     private Populacja populacja;
 
@@ -36,7 +43,7 @@ public class Controller implements  Runnable{
     private int pokolenie;
 
     public Controller(WidokMain vidokMain) {
-
+        zEwolucja = true;
         this.widokMain = vidokMain;
 
 
@@ -60,25 +67,26 @@ public class Controller implements  Runnable{
                         System.out.println("interrupted");
                     }
             }
+            if (zEwolucja){
+                simulation.update((sleep > 0 ? DELAY_FRAME : timeDiff ));
+                try {
+                    copyModel = (Model)model.clone();
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
 
-            simulation.update((sleep > 0 ? DELAY_FRAME : timeDiff ));
-            try {
-                copyModel = (Model)model.clone();
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
-            }
+                if(pokolenie < populacja.getIloscPokolen()){
+                    model.setIntervalsOnCrossroads(populacja.getNajlepszeOkresy());
+                    pokolenie = populacja.getIloscPokolen();
 
-            if(pokolenie < populacja.getIloscPokolen()){
-                model.setIntervalsOnCrossroads(populacja.getNajlepszeOkresy());
-                pokolenie = populacja.getIloscPokolen();
-
-//                for(long x : populacja.getNajlepszeOkresy()){
-//                    System.out.println("Dobre okresy: " + x);
-//                }
+    //                for(long x : populacja.getNajlepszeOkresy()){
+    //                    System.out.println("Dobre okresy: " + x);
+    //                }
 
 
 
-//                System.out.println("ustawiam swiatla wg nowego pokolenia! " + pokolenie);
+    //                System.out.println("ustawiam swiatla wg nowego pokolenia! " + pokolenie);
+                }
             }
 
 
@@ -123,7 +131,9 @@ public class Controller implements  Runnable{
     public void start(){
         thread = new Thread(this);
         thread.start();
-        populacja.start();
+
+        if(zEwolucja)
+            populacja.start();
 
     }
 
@@ -157,7 +167,9 @@ public class Controller implements  Runnable{
             e.printStackTrace();
         }
 
-        this.populacja = new Populacja(this);
+        if(zEwolucja)
+            this.populacja = new Populacja(this, wyborPopulacji);
+
         this.simulation = new Simulation(model);
     }
     public void generateModel(int h, int v){
@@ -166,4 +178,12 @@ public class Controller implements  Runnable{
 
     }
 
+
+    public void setzEwolucja(boolean zEwolucja) {
+        this.zEwolucja = zEwolucja;
+    }
+
+    public void setWyborPopulacji(Populacja.Wybor wyborPopulacji) {
+        this.wyborPopulacji = wyborPopulacji;
+    }
 }

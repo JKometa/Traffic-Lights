@@ -102,26 +102,11 @@ public class Model implements Cloneable {
         spawnPoints = new ArrayList<SpawnPoint>();
 
 
-        /*
-        tu namaziac  konstruktora
-
-        zmieniac tylko te zmienne i tablice
-
-            to zakomentowac:
         numberOfHorizontalRoads = 2;
-        numberOfVerticalRoads = 2;
+        numberOfVerticalRoads = 3;
 
-        w te tablice wstawic wylosowane linie i wsio tutaj
-
-        int[] horizontal = {250, 444};
-        int[] vertical = {200, 366};
-
-         */
-        numberOfHorizontalRoads = 2;
-        numberOfVerticalRoads = 2;
-
-        int[] horizontal = {250, 444};
-        int[] vertical = {200, 366};
+        int[] horizontal = {250, 750};
+        int[] vertical = {100, 366, 800};
 
         horizontalLines = horizontal;
         verticalLines = vertical;
@@ -169,9 +154,9 @@ public class Model implements Cloneable {
         try {
             Model clone = (Model)super.clone();
 
-            clone.carLeft = this.carLeft;
+            clone.carLeft = 0; //this.carLeft;
             clone.timeToNextCarSpawn = this.timeToNextCarSpawn;
-            clone.averageTimeInTraffic = this.averageTimeInTraffic;
+            clone.averageTimeInTraffic = 0; //this.averageTimeInTraffic;
             clone.verticalLines = this.verticalLines.clone();
             clone.horizontalLines = this.horizontalLines.clone();
 

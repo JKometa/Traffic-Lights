@@ -77,7 +77,14 @@ public class Populacja implements  Runnable {
     private double tau;
     private double tau2;
 
-    public Populacja(Controller controller) {
+    public enum Wybor{
+        NAJLEPSZY, RULETKA, RANKING;
+    }
+
+    Wybor wybor;
+
+    public Populacja(Controller controller, Wybor wybor) {
+        this.wybor = wybor;
         this.controller = controller;
         try {
             this.model = (Model)controller.getCopyModel().clone();
@@ -226,6 +233,22 @@ public class Populacja implements  Runnable {
     }
 
     /**
+     * wybiera następne pokolenie rodziców z rodziców + potomkowie wg metody ruletki -> patrz skrypt
+     */
+    public void wybierzRuletka(){
+
+    }
+
+
+    /**
+     * wybiera następne pokolenie rodziców z rodziców + potomkowie wg metody rankingowej -> patrz skrypt
+     */
+    public void wybierzRanking(){
+
+    }
+
+
+    /**
      * zwraca tablice najlepszych okresów obecnego pokolenia
      * @return tablice okresów od najlepszego osobnika
      */
@@ -251,7 +274,23 @@ public class Populacja implements  Runnable {
             mutuj();
             ocenOsobnikow(zarodki);
 
-            wybierzNajlepszych();
+            switch (wybor){
+                case NAJLEPSZY:
+                    wybierzNajlepszych();
+                    break;
+
+                case RULETKA:
+                      wybierzRuletka();
+                    break;
+
+                case RANKING:
+                      wybierzRanking();
+                     break;
+            }
+
+
+
+
             ++iloscPokolen;
 
             try {
