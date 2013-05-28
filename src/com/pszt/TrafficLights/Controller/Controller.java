@@ -54,6 +54,7 @@ public class Controller implements  Runnable{
         long beforeTime, timeDiff, sleep;
         final Wykres demo = new Wykres("Wykres");
         demo.setVisible(true);
+        RefineryUtilities.centerFrameOnScreen(demo);
         beforeTime = System.currentTimeMillis();
         widokMain.getWidokBezSymulancji().setData(modelBezEwolucji.getCars(), modelBezEwolucji.getCrossroads());
         widokMain.getWidokBezSymulancji().setEwolucja(true);
@@ -64,7 +65,7 @@ public class Controller implements  Runnable{
             demo.update(getAverageTimeInTrafficBezEwolucji(), getAverageTimeInTraffic());
             demo.pack();
 
-                RefineryUtilities.centerFrameOnScreen(demo);
+
 
 
 
