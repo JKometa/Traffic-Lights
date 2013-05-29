@@ -1,8 +1,11 @@
 package com.pszt.TrafficLights.Ewolucja;
 
-import java.util.*;
-import com.pszt.TrafficLights.model.Model;
 import com.pszt.TrafficLights.Controller.Controller;
+import com.pszt.TrafficLights.model.Model;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 
 /**
@@ -213,6 +216,7 @@ public class Populacja implements  Runnable {
             tmp.add(potomek);
         }
 
+        System.out.println("-----------------------------------------------------------   KURWA "  + tmp.size());
         KomparatorOsobnikow komparator = new KomparatorOsobnikow();
         Collections.sort(tmp, komparator);
         osobnicy.clear();
@@ -244,7 +248,59 @@ public class Populacja implements  Runnable {
      * wybiera następne pokolenie rodziców z rodziców + potomkowie wg metody rankingowej -> patrz skrypt
      */
     public void wybierzRanking(){
+        int prawdo;
+        Random generator = new Random();
+        ArrayList< Osobnik > tmp = new ArrayList<Osobnik>();
 
+        for (Osobnik rodzic : osobnicy){
+            tmp.add(rodzic);
+        }
+
+        for (Osobnik potomek : zarodki){
+            tmp.add(potomek);
+        }
+
+        KomparatorOsobnikow komparator = new KomparatorOsobnikow();
+        Collections.sort(tmp, komparator);
+        osobnicy.clear();
+
+        for (int i = 0; i < iloscOsobnikow; ++i){
+            prawdo = generator.nextInt(435);
+            osobnicy.add(chooseRandomRank(prawdo, tmp));
+
+        }
+        tmp = osobnicy;
+        Collections.sort(tmp, komparator);
+        najlepszy = tmp.get(0);
+
+        for(Osobnik x : osobnicy){
+            System.out.println("Wynik: " + x.getWynik());
+        }
+
+    }
+
+    private Osobnik chooseRandomRank(int prawdo, ArrayList<Osobnik> tmp) {
+        int add = 29, index =0;
+
+        for(int i = 0;i <= 435;){
+           if(prawdo >= i && prawdo <= i+add && !checkIfExists(tmp.get(index)))
+               return tmp.get(index);
+            i += index;
+            add--;
+            index++;
+        }
+
+
+        return null;  //To change body of created methods use File | Settings | File Templates.
+    }
+
+    private boolean checkIfExists(Osobnik osobnik) {
+        for(Osobnik o: osobnicy){
+            if(o.equals(osobnik))
+                return true;
+        }
+
+        return false;
     }
 
 
