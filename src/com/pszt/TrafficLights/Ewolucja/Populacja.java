@@ -216,8 +216,7 @@ public class Populacja implements  Runnable {
             tmp.add(potomek);
         }
 
-        System.out.println("-----------------------------------------------------------   KURWA "  + tmp.size());
-        KomparatorOsobnikow komparator = new KomparatorOsobnikow();
+       KomparatorOsobnikow komparator = new KomparatorOsobnikow();
         Collections.sort(tmp, komparator);
         osobnicy.clear();
 
@@ -237,7 +236,7 @@ public class Populacja implements  Runnable {
     }
 
     /**
-     * wybiera następne pokolenie rodziców z rodziców + potomkowie wg metody ruletki -> patrz skrypt
+     * wybiera następne pokolenie rodziców z rodziców + potomkowie wg metody ruletki
      */
     public void wybierzRuletka(){
         ArrayList< Osobnik > tmp = new ArrayList<Osobnik>();
@@ -279,7 +278,7 @@ public class Populacja implements  Runnable {
 
 
     /**
-     * wybiera następne pokolenie rodziców z rodziców + potomkowie wg metody rankingowej -> patrz skrypt
+     * wybiera następne pokolenie rodziców z rodziców + potomkowie wg metody rankingowej
      */
     public void wybierzRanking(){
         int prawdo;
