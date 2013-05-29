@@ -8,8 +8,8 @@ import java.awt.Point;
  * User: marcin
  * Date: 03.05.13
  * Time: 16:08
- *
- *  Abstrakcyjna klasa przedstawiajaca wszystko co ma swoje polozenie na mapie
+ * <p/>
+ * Abstrakcyjna klasa przedstawiajaca wszystko co ma swoje polozenie na mapie
  */
 abstract class ModelObject implements Cloneable {
     protected double x;
@@ -32,20 +32,20 @@ abstract class ModelObject implements Cloneable {
         }
     }
 
-    public void setPosition(Point position){
+    public void setPosition(Point position) {
         this.x = position.x;
         this.y = position.y;
     }
 
-    public void setPosition(double x, double y){
+    public void setPosition(double x, double y) {
         this.x = x;
         this.y = y;
     }
 
 
-   public Point getPosition(){
-       return new Point((int)x, (int)y);
-   }
+    public Point getPosition() {
+        return new Point((int) x, (int) y);
+    }
 
     public double getPositionX() {
         return x;
@@ -72,17 +72,19 @@ abstract class ModelObject implements Cloneable {
     }
 
     /**
-     *  getBounds
+     * getBounds
+     *
      * @return kwadrat jaki zajmuje dany obiekt na mapie
      */
     abstract public Rectangle getBounds();
 
     /**
      * HitBox - kwadrat używany do detekcji kolizji
+     *
      * @return zwraca kwadrat robiący za hitboxa, jeśli dany samochodzik ma wielkość
-     *  szerokość x wysokość, to hit box danego samochodzika ma
-     *  szerokość + margines x wysokość + margines,
-     *  aby samochody nie jechały zderzak w zderzak
+     *         szerokość x wysokość, to hit box danego samochodzika ma
+     *         szerokość + margines x wysokość + margines,
+     *         aby samochody nie jechały zderzak w zderzak
      */
     abstract public Rectangle getHitBox();
 }

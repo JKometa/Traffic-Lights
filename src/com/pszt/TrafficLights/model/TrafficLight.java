@@ -33,7 +33,7 @@ public class TrafficLight implements Cloneable {
     @Override
     protected Object clone() throws CloneNotSupportedException {
         try {
-            TrafficLight clone = (TrafficLight)super.clone();
+            TrafficLight clone = (TrafficLight) super.clone();
             clone.color = color;
 
             return clone;
@@ -50,12 +50,12 @@ public class TrafficLight implements Cloneable {
         this.color = color;
     }
 
-    public boolean isGreen(){
+    public boolean isGreen() {
         return (color == LightColor.GREEN ? true : false);
     }
 
-    public void nextColor(){
-        switch (color){
+    public void nextColor() {
+        switch (color) {
             case RED:
                 color = LightColor.RED_YELLOW;
                 break;
@@ -119,15 +119,15 @@ public class TrafficLight implements Cloneable {
      *
     public TrafficLight(int id, int x, int y, int width, int height,Possition possition, LightColor color, long interval){
 
-        this.id = id;
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.possition = possition;
-        this.color = color;
-        this.turnedOn = false;
-        this.interval = interval;
+    this.id = id;
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.possition = possition;
+    this.color = color;
+    this.turnedOn = false;
+    this.interval = interval;
 
     }
 
@@ -143,110 +143,110 @@ public class TrafficLight implements Cloneable {
      *
     public TrafficLight(int id, int x, int y, int width, int height, long interval){
 
-        this.id = id;
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.turnedOn = false;
-        this.interval = interval;
+    this.id = id;
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.turnedOn = false;
+    this.interval = interval;
 
     }
 
     public void setColor(LightColor color){
-        this.color = color;
+    this.color = color;
     }
 
     public void setPossition(Possition possition){
-        this.possition = possition;
+    this.possition = possition;
     }
 
     public void setWidth(int width){
-        this.width = width;
+    this.width = width;
     }
 
     public void setHeight(int height){
-        this.height = height;
+    this.height = height;
     }
 
     public void setTurnedOn(boolean turnedOn){
-        this.turnedOn = turnedOn;
+    this.turnedOn = turnedOn;
     }
 
     public void setInterval(long interval){
-        this.interval = interval;
+    this.interval = interval;
     }
 
     public void setIntervalRed(long interval){
-        intervalRed = interval;
+    intervalRed = interval;
     }
 
     public void setIntervalYellow(long interval){
-        intervalYellow = interval;
+    intervalYellow = interval;
     }
 
     public void setIntervalGreen(long interval){
-        intervalGreen = interval;
+    intervalGreen = interval;
     }
 
     public void setX(int x){
-        this.x = x;
+    this.x = x;
     }
 
     public void setY(int y){
-        this.y = y;
+    this.y = y;
     }
 
 
     public long getInterval(){
-        return interval;
+    return interval;
     }
 
     public long getIntervalRed(){
-        return intervalRed;
+    return intervalRed;
     }
 
     public long getIntervalYellow(){
-        return intervalYellow;
+    return intervalYellow;
     }
 
     public long  getIntervalGreen(){
-        return  intervalGreen;
+    return  intervalGreen;
     }
 
     public int getId(){
-        return id;
+    return id;
     }
 
     public int getX(){
-        return x;
+    return x;
     }
 
     public int getY(){
-        return y;
+    return y;
     }
 
     public int getWidth(){
-        return width;
+    return width;
     }
 
     public int getHeight(){
-        return height;
+    return height;
     }
 
     public LightColor getColor(){
-        return this.color;
+    return this.color;
     }
 
     public Possition getPossition(){
-        return this.possition;
+    return this.possition;
     }
 
     public boolean getTurnedOn(){
-        return turnedOn;
+    return turnedOn;
     }
 
 
-          */
+     */
 
 }

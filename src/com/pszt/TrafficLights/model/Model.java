@@ -35,17 +35,17 @@ public class Model implements Cloneable {
     /**
      * kontener przechowujący wszystkie samochody na planszy
      */
-    private ArrayList< Car > cars;
+    private ArrayList<Car> cars;
 
     /**
      * kontener przechowujący wszystkie skrzyżowania na planszy
      */
-    private ArrayList< Crossroad > crossroads;
+    private ArrayList<Crossroad> crossroads;
 
     /**
      * kontener przechowujący wszystkie początki dróg na planszy
      */
-    private ArrayList< SpawnPoint> spawnPoints;
+    private ArrayList<SpawnPoint> spawnPoints;
 
     /**
      * czas za jaki ma sie zrespić nowy samochód
@@ -90,10 +90,11 @@ public class Model implements Cloneable {
 
     /**
      * generuje model z odpowiednia ilością dróg
-     * @param numberOfHorizontalRoads ilość dróg poziomych
-     * @param numberOfVerticalRoads ilość dróg pionowych
      *
-     *  Na razie nie działa i tworzy statycznie :P
+     * @param numberOfHorizontalRoads ilość dróg poziomych
+     * @param numberOfVerticalRoads   ilość dróg pionowych
+     *                                <p/>
+     *                                Na razie nie działa i tworzy statycznie :P
      */
 
     public Model(int numberOfHorizontalRoads, int numberOfVerticalRoads) {
@@ -115,33 +116,33 @@ public class Model implements Cloneable {
 
         timeToNextCarSpawn = generator.nextInt(MAX_SPAWN_TIME + MIN_SPAWN_TIME) - MIN_SPAWN_TIME;
 
-        ArrayList < SpawnPoint > horizontalSpawnPoints = new ArrayList<SpawnPoint>();
-        for (int y : horizontal){
-             boolean ascending =  generator.nextBoolean();
-             horizontalSpawnPoints.add(new SpawnPoint((ascending ? 0 : BOARD_WIDTH), y, true, ascending));
+        ArrayList<SpawnPoint> horizontalSpawnPoints = new ArrayList<SpawnPoint>();
+        for (int y : horizontal) {
+            boolean ascending = generator.nextBoolean();
+            horizontalSpawnPoints.add(new SpawnPoint((ascending ? 0 : BOARD_WIDTH), y, true, ascending));
         }
 
-        ArrayList < SpawnPoint > verticalSpawnPoints = new ArrayList<SpawnPoint>();
-        for (int x : vertical){
+        ArrayList<SpawnPoint> verticalSpawnPoints = new ArrayList<SpawnPoint>();
+        for (int x : vertical) {
             boolean ascending = generator.nextBoolean();
             verticalSpawnPoints.add(new SpawnPoint(x, (ascending ? 0 : BOARD_HEIGHT), false, ascending));
         }
 
-        for (SpawnPoint y : horizontalSpawnPoints){
-            for (SpawnPoint x : verticalSpawnPoints){
-                crossroads.add(new Crossroad(x.getPositionX(), y.getPositionY(),y.isAscending(), x.isAscending()));
+        for (SpawnPoint y : horizontalSpawnPoints) {
+            for (SpawnPoint x : verticalSpawnPoints) {
+                crossroads.add(new Crossroad(x.getPositionX(), y.getPositionY(), y.isAscending(), x.isAscending()));
             }
         }
 
-        for (SpawnPoint tmp : horizontalSpawnPoints){
+        for (SpawnPoint tmp : horizontalSpawnPoints) {
             spawnPoints.add(tmp);
         }
 
-        for (SpawnPoint tmp : verticalSpawnPoints){
+        for (SpawnPoint tmp : verticalSpawnPoints) {
             spawnPoints.add(tmp);
         }
 
-        for (SpawnPoint spawn : spawnPoints){
+        for (SpawnPoint spawn : spawnPoints) {
             cars.add(spawn.spawn());
         }
 
@@ -152,7 +153,7 @@ public class Model implements Cloneable {
     @Override
     public Object clone() throws CloneNotSupportedException {
         try {
-            Model clone = (Model)super.clone();
+            Model clone = (Model) super.clone();
 
             clone.carLeft = 0; //this.carLeft;
             clone.timeToNextCarSpawn = this.timeToNextCarSpawn;
@@ -162,18 +163,18 @@ public class Model implements Cloneable {
             clone.averageTimeInTraffic = this.averageTimeInTraffic;
 
             clone.crossroads = new ArrayList<Crossroad>();
-            for(Crossroad cross : this.crossroads ){
-                clone.crossroads.add((Crossroad)cross.clone());
+            for (Crossroad cross : this.crossroads) {
+                clone.crossroads.add((Crossroad) cross.clone());
             }
 
             clone.cars = new ArrayList<Car>();
-            for(Car car : this.cars){
-                clone.cars.add((Car)car.clone());
+            for (Car car : this.cars) {
+                clone.cars.add((Car) car.clone());
             }
 
             clone.spawnPoints = new ArrayList<SpawnPoint>();
-            for(SpawnPoint spawn : this.spawnPoints){
-                clone.spawnPoints.add((SpawnPoint)spawn.clone());
+            for (SpawnPoint spawn : this.spawnPoints) {
+                clone.spawnPoints.add((SpawnPoint) spawn.clone());
             }
 
             for(Car car : clone.cars){
@@ -194,9 +195,10 @@ public class Model implements Cloneable {
 
     /**
      * get bounds
+     *
      * @return prostokąt jaki zajmuje plansza modelu
      */
-    public Rectangle getBounds(){
+    public Rectangle getBounds() {
         return new Rectangle(0, 0, BOARD_WIDTH, BOARD_HEIGHT);
     }
 
@@ -249,13 +251,14 @@ public class Model implements Cloneable {
     }
 
     /**
-     *  uaktualnia czas do respawnu
+     * uaktualnia czas do respawnu
+     *
      * @param deltaTime czas jaki upłynął od ostatnie aktualizacji
      * @return true jeśli wymagany jest respawn nowego samochodu
      */
-    public boolean updateTimeToRespawn(long deltaTime){
+    public boolean updateTimeToRespawn(long deltaTime) {
         timeToNextCarSpawn -= deltaTime;
-        if(timeToNextCarSpawn <= 0){
+        if (timeToNextCarSpawn <= 0) {
             Random generator = new Random();
             timeToNextCarSpawn = generator.nextInt(MAX_SPAWN_TIME + MIN_SPAWN_TIME) - MIN_SPAWN_TIME;
             return true;

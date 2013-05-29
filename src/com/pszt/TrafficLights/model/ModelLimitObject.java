@@ -7,7 +7,7 @@ import java.util.Random;
  * User: marcin
  * Date: 03.05.13
  * Time: 16:36
- *
+ * <p/>
  * Abstrakcyjna klasa wyznaczajaca ograniczenie predkosci na poczatku drogi ktorej sie znajduje
  */
 abstract class ModelLimitObject extends ModelObject implements Cloneable {
@@ -24,6 +24,7 @@ abstract class ModelLimitObject extends ModelObject implements Cloneable {
     /**
      * Konstruktor przyjmujacy wspolrzedne na ktorej bedzie sie znajdowac obiekt,
      * predkosc jest generowana losowo
+     *
      * @param x wspolrzedne x
      * @param y wspolrzedne y
      */
@@ -39,7 +40,7 @@ abstract class ModelLimitObject extends ModelObject implements Cloneable {
     @Override
     protected Object clone() throws CloneNotSupportedException {
         try {
-            ModelLimitObject clone = (ModelLimitObject)super.clone();
+            ModelLimitObject clone = (ModelLimitObject) super.clone();
             clone.speedLimit = speedLimit;
             return clone;
 

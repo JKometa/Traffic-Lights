@@ -319,7 +319,7 @@ public class Populacja implements  Runnable {
         for(int i = 0;i <= 435;){
            if(prawdo >= i && prawdo <= i+add && !checkIfExists(tmp.get(index)))
                return tmp.get(index);
-            i += index;
+            i += add;
             add--;
             index++;
         }

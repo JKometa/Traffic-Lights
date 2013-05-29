@@ -14,19 +14,19 @@ public class DataHandler {
     private ArrayList<DataStruct> crossroadStruct;
 
 
-    public DataHandler(){
+    public DataHandler() {
         crossroadStruct = new ArrayList<DataStruct>();
     }
 
-    public void addCrossroadData(DataStruct data){
+    public void addCrossroadData(DataStruct data) {
         crossroadStruct.add(data);
     }
 
-    public void removeData(DataStruct data){
+    public void removeData(DataStruct data) {
         crossroadStruct.remove(data);
     }
 
-    public ArrayList<DataStruct> getCrossroadStruct(){
+    public ArrayList<DataStruct> getCrossroadStruct() {
         return crossroadStruct;
     }
 
