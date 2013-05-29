@@ -299,8 +299,11 @@ public class Populacja implements  Runnable {
         osobnicy.clear();
 
         for (int i = 0; i < iloscOsobnikow; ++i){
-            prawdo = generator.nextInt(435);
-            osobnicy.add(chooseRandomRank(prawdo, tmp));
+            prawdo = generator.nextInt(434);
+            if(chooseRandomRank(prawdo, tmp) != null)
+                osobnicy.add(chooseRandomRank(prawdo, tmp));
+            else
+                --i;
 
         }
         tmp = osobnicy;
@@ -316,7 +319,7 @@ public class Populacja implements  Runnable {
     private Osobnik chooseRandomRank(int prawdo, ArrayList<Osobnik> tmp) {
         int add = 29, index =0;
 
-        for(int i = 0;i <= 435;){
+        for(int i = 0;i <= 434;){
            if(prawdo >= i && prawdo <= i+add && !checkIfExists(tmp.get(index)))
                return tmp.get(index);
             i += add;
@@ -330,7 +333,7 @@ public class Populacja implements  Runnable {
 
     private boolean checkIfExists(Osobnik osobnik) {
         for(Osobnik o: osobnicy){
-            if(o.equals(osobnik))
+            if(o == osobnik)
                 return true;
         }
 
